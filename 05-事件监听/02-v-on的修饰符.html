@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h2>{{message}}</h2>
+  <div @click="divClick">
+    divdivdiv
+    <!--.stop是修饰符，阻止冒泡-->
+    <button @click.stop="btnClick">点击按钮</button>
+  </div>
+
+  <!--.prevent修饰符是阻止默认事件，在表单提交中经常用到-->
+
+  <!--键修饰符，键别名-->
+  <input @keyup.enter="onEnter">
+
+  <!--键修饰符，键代码-->
+  <!--<input @keyup.13="onEnter">-->
+
+  <!--点击回调只会触发一次-->
+  <!--<button @click.once="doThis"></button>-->
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello'
+    },
+    methods:{
+      divClick(){
+        console.log("divClick");
+      },
+      btnClick(){
+        console.log("btnClick");
+      },
+      onEnter(){
+        console.log("onEnter");
+      }
+    }
+  })
+</script>
+</body>
+</html>

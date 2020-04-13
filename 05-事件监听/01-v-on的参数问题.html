@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h2>{{message}}</h2>
+  <!--在事件定义时，写函数时省略了小括号，但是方法本是是需要一个参数的，-->
+  <!--这个时候，vue会默认将浏览器生成的event事件对象作为参数传入到方法-->
+  <button @click="btn1">点击1</button>
+
+  <!--方法定义时，我们需要event对象，同时又需要其他参数-->
+  <!--在调用方式，如何手动的获取到浏览器产生的event对象：$event-->
+  <button @click="btn2(123,$event)">点击2</button>
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello'
+    },
+    methods:{
+      btn1(event){
+        console.log(event);
+      },
+      btn2(val,event){
+        console.log('------------',val,event)
+      }
+    }
+  })
+  //如果函数需要参数，但是没有传入，那么函数的形参为unedfined
+  // function abc(val) {
+  //   console.log(val)//undefined
+  // }
+  // abc();
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">{{message}}
+   <ul>
+     <li v-for="item in arr" :key="item">{{item}}</li>
+   </ul>
+
+
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello',
+      arr:['a','b','c','d','e','f']
+    },
+    mounted(){
+      //splice()方法会改变原始数组
+      this.arr.splice(2,0,'o')//在数组第二个位置添加o元素
+      this.arr.splice(2,2)//在数组第二个位置开始删除2个元素
+      this.arr.splice(2,3,"William")//删除从 index 2 ("Thomas") 开始的三个元素，并添加一个新元素 ("William") 来替代被删除的元素
+    }
+  })
+</script>
+</body>
+</html>

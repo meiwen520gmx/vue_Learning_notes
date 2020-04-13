@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .active{
+      color: red;
+    }
+    .indict{
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <h2>{{message}}</h2>
+  <div>
+     <ul>
+       <li class="indict" v-for="(item,key) in List" :class="{'active':key === index}" @click="selected(key)">{{item}}</li>
+     </ul>
+  </div>
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello',
+      List:[
+          '鬼吹灯','精绝古城','怒晴湘西','黄皮子坟','龙岭迷窟'
+      ],
+      index:0,
+    },
+    methods:{
+      selected(key){
+        this.index = key;
+      }
+    }
+  })
+</script>
+</body>
+</html>

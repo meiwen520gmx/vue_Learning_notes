@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .active{
+      color: red;
+    }
+    h2{
+      color: greenyellow;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!--key值可以不加单引号，但是value一定要加单引号，是变量就不加单引号-->
+  <!--<h2 :class="{类名：boolean}">{{message}}</h2>-->
+  <h2 :class="{active:isActive}">{{message}}</h2>
+  <button @click="changeColor">变色</button>
+  <h2 :class="getClasses()">{{message}}</h2>
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello',
+      isActive:true
+    },
+    methods:{
+      changeColor(){
+        this.isActive = !this.isActive;
+      },
+      getClasses(){
+        return {active:this.isActive}
+      }
+    }
+  })
+</script>
+</body>
+</html>
