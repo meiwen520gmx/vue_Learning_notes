@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn></cpn>
+  <cpn></cpn>
+  <cpn></cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    <p>当前计数：{{num}}</p>
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+  </div>
+</template>
+<script src="../vue.js"></script>
+<script>
+  Vue.component('cpn',{
+    template:'#cpn',
+    //为什么data是一个函数：因为每创建一个实例都会单独返回一个data，防止数据篡改，以便自己改自己的
+    //这样有利于每个实例保存属于自己的状态
+    data(){
+      return {
+        num:0,
+      }
+    },
+    methods:{
+      increment(){this.num++},
+      decrement(){this.num--}
+    }
+  });
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello'
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--1.lazy,一旦有数据发生改变，修饰符可以让数据在失去焦点或回车时才会更新-->
+  <input type="text" v-model.lazy="message">
+  <h2>{{message}}</h2>
+
+  <!--2.number,可以让在输入框中输入的内容自动转成数字类型-->
+  <!--<input type="number"> 这种只能输入数字-->
+  <input type="number" v-model.number="age">
+  <h2>{{age}}--{{typeof age}}</h2>
+
+  <!--3.trim,可以过滤内容左右两边的空格-->
+  <input type="text" v-model.trim="name">
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello',
+      age:0,
+      name:''
+    }
+  })
+</script>
+</body>
+</html>

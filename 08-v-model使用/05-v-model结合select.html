@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--1.选择一个值-->
+  <select  name="fruit" id="fruit" v-model="mySelect">
+    <option value="apple">苹果</option>
+    <option value="orange">橘子</option>
+    <option value="banana">香蕉</option>
+  </select>
+  <h2>您选择的水果是：{{mySelect}}</h2>
+
+  <!--2.选择多个值,选择的时候按住ctrl键进行多选-->
+  <select  name="like" id="like" v-model="mySelects" multiple>
+    <option value="apple">苹果</option>
+    <option value="orange">橘子</option>
+    <option value="banana">香蕉</option>
+  </select>
+  <h2>您喜欢的水果是：{{mySelects}}</h2>
+</div>
+<script src="../vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello',
+      mySelect:'apple',
+      mySelects:[]
+    }
+  })
+</script>
+</body>
+</html>

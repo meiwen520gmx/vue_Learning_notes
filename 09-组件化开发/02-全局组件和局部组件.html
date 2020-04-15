@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">{{message}}</div>
+<script src="../vue.js"></script>
+<script>
+  //1.创建组件构造器对象
+  const cpnC=Vue.extend({
+    template:`<div>
+        <h2>我是标题</h2>
+        <p>我是内容</p>
+     </div>`
+  });
+  //2.注册组件(全局组件，意味着可以在多个vue的实例下面使用)
+  Vue.component('my-cpn',cpnC);
+
+  const app = new Vue({
+    el:'#app',
+    data:{
+      message:'hello'
+    },
+
+    //此时注册的就是局部组件，你在哪个vue实例下注册的就只能在这个vue实例下使用该组件
+    components:{
+      //cpn使用组件时的标签名
+      cpn: cpnC
+    }
+  })
+</script>
+</body>
+</html>
