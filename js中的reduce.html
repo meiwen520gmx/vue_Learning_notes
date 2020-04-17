@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+
+  let arr = [3,9,4,3,6,0,9];
+
+  //求数组中的最大值
+  let max = arr.reduce( (prev, cur) => {
+    return Math.max(prev,cur);
+  });
+  console.log(max);
+
+  //数组去重
+  let newArr = arr.reduce((prev, cur) => {
+    prev.indexOf(cur) === -1 && prev.push(cur);
+    return prev;
+  },[]);
+  console.log(newArr);
+</script>
+</body>
+</html>
