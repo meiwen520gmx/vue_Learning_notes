@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<!--type="module"意思是引入的这个js文件是有自己单独的作用域-->
+<!--ht ReferenceError: flag is not defined引用报错，是因为引入的时候加了type="module"-->
+<!--使得其他js文件不能访问a1.js里面的变量-->
+<script src="a1.js" type="module"></script>
+<script src="b1.js" type="module"></script>
+<script src="c1.js" type="module"></script>
+</body>
+</html>
