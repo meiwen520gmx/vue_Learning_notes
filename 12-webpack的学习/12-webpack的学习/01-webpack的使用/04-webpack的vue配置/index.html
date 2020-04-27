@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!-- <div id='app'>
+  <h2>{{message}}</h2>
+</div> -->
+
+
+<div id="app"></div>
+
+
+
+<!--先打包-->
+<!--webpack ./src/main.js  ./dist/bundle.js-->
+<!--再引用-->
+<script src="./dist/bundle.js"></script>
+
+<!--如果每次使用webpack的命令都需要写上入口和出口作为参数，
+就非常麻烦，有没有一种方法可以将这两个参数写到配置中，再运行-->
+<!--当然可以，就是创建一个webpack.config.js文件-->
+<!-- <h2>--save || -S // 运行依赖（发布）</h2>
+<p>–save ： dependencies 键下，发布后还需要依赖的模块，
+  譬如像jQuery库或者Angular框架类似的，我们在开发完后后肯定还要依赖它们，否则就运行不了。
+</p>
+<h2>–save-dev || -D //开发依赖（辅助）</h2>
+<p>–save-dev ： devDependencies 键下，开发时的依赖比如安装 js的压缩包gulp-uglify
+  因为我们在发布后用不到它，而只是在我们开发才用到它。
+</p>
+<p>
+  全局安装了webpack后，还要进行本地安装，因为有可能自己的项目使用的webpack版本和全局安装的webpack不一致，
+  在任何终端输入webpack进行打包，用的都是全局的webpack,只有在package.json内scripts对象定义自己的执行脚本，才会优先在本地查找webpack进行打包
+  package.json中的scripts的脚本在执行时，会按照一定的顺序寻找命令对应的位置：1.首先会寻找本地的node_modules/.bin路径中对应的命令，如果没有找到，会去全局的环境变量中寻找
+
+</p> -->
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+prod.config.js是生产环境下的配置
+dev.config.js是开发环境下的配置
+base.config.js是公共的配置
+
+想要使得base.config.js与dev.config.js合并的话必须安装一个webpack-merge
+安装： npm i webpack-merge --save-dev
+使用:
+const webpackMerge = require("webpack-merge");
+const baseConfig = require("./base.config");
+
+module.exports = webpackMerge(baseConfig, {
+  devServer: {
+    contentBase: "./dist",
+    inline: true,
+  },
+});

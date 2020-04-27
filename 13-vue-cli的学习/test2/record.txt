@@ -1,0 +1,27 @@
+只要文件夹里面有个.gitkeep文件，到时候上传git远程仓库时，无论这个文件夹是不是为空，都会上传上去，一般上传git是不会把空文件夹上传上去的，只要添加了.gitkeep这个文件，就一定会上传上去
+
+.editorconfig文件中的insert_final_newline = true 意思是代码一共写了13行，但是按格式来讲应该还应多一行
+
+error:
+安装cli错误： 在C:\Users\admin\AppData\Roaming文件夹下看是否有npm-cache这个文件，直接删掉
+
+
+runtime-compiler和runtime-only的区别就是main.js文件
+runtime-compiler：
+template----->ast----->render--->virtual dom---->真实的DOM
+
+runtime-only中的main.js多了一个render函数：（性能更高，代码量更多）
+render--->virtual dom---->真实的DOM
+
+ render (createElemtn) {         样式             内容
+    return createElemtn('h2', {class: 'box'}, ['Hello world'])
+  }
+  render (createElement) {
+    // 1.普通用法：return createElement('h2', {class: 'box'}, ['Hello world', createElement('button', ['按钮'])])
+    // 2.传入组件对象：
+    //   return createElement(App)
+  }
+
+  那么.vue文件中得template是由谁来处理的？ 答：是由vue-template-compiler
+  如果在之后的开发中，你依然使用template，就需要选择runtime-compiler
+  如果你之后的开发中，使用的是.vue文件夹开发，那么可以选择runtime-only

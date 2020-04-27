@@ -1,0 +1,7 @@
+style-loader将模块的导出作为样式添加到DOM中
+css-loader解析css文件后，使用import加载，并且返回css代码
+less-loader加载和转译LESS文件
+
+ES6语法处理：
+安装loader:npm i --save-dev babel-loader@7 babel-core babel-preset-es2015
+在webpack.config.js文件中进行配置

@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae4aa77a-fbe8-4933-8c81-e83817b2771e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/11-前端模块化/01-为什么要有模块化/commonJS导出.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/11-前端模块化/02-ES6的模块化实现/a1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/11-前端模块化/02-ES6的模块化实现/b1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/11-前端模块化/02-ES6的模块化实现/c1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/11-前端模块化/02-ES6的模块化实现/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/01-webpack的起步/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/01-webpack的起步/src/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/01-webpack的起步/src/mathUtils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/01-webpack的起步/webpack.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/02-webpack的配置/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/02-webpack的配置/npm --save-dev --save 的区别" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/02-webpack的配置/src/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/02-webpack的配置/src/mathUtils.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/12-webpack的学习/01-webpack的使用/02-webpack的配置/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/11-前端模块化/01-为什么要有模块化/说明" beforeDir="false" afterPath="$PROJECT_DIR$/11-前端模块化/01-为什么要有模块化/说明" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue.js" beforeDir="false" />
-    </list>
+    <list default="true" id="ae4aa77a-fbe8-4933-8c81-e83817b2771e" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -187,12 +169,12 @@
       <workItem from="1586829701224" duration="17655000" />
       <workItem from="1586960180236" duration="233000" />
       <workItem from="1587027339305" duration="16829000" />
-      <workItem from="1587195938248" duration="14402000" />
+      <workItem from="1587195938248" duration="14715000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99554000" />
+    <option name="totallyTimeSpent" value="99867000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -214,7 +196,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.73751783" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.73466474" />
       <window_info id="Favorites" order="2" sideWeight="0.50094515" side_tool="true" weight="0.18618366" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />

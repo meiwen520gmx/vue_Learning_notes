@@ -1,0 +1,32 @@
+1.runtime-only -> 代码中，不可以有任何的template
+2.runtime-compiler -> 代码中，可以有template,因为有compiler可以用于编译template
+需要选择runtime-compiler的话就必须在webpack.config.js里面进行配置
+
+总结：
+1.npm i --save vue
+2.在入口文件进行导入并且创建一个实例
+3.在index.html指定id模板进行数据渲染
+4.在webpack.config.js进行vue的配置
+
+SPA(simple page web application)单页面复用
+
+el和template的关系就是:template会替换el
+
+vue模块的终极写法请看：vue/App.vue
+这个文件需要相应的loader来解析--->vue-loader以及vue-template-compiler
+安装vue-loader以及vue-template-compiler:
+npm i vue-loader vue-template-compiler --save-dev
+再修改webpack.config.js配置文件：
+{
+    test: /\.vue$/,
+    use: ['vue-loader']
+}
+打包发现还是错误，是因为你的vue-loader安装的版本是14之后的，如果版本是14之后的，你还想使用vue-loader的话就必须配置相应的plugin
+
+
+认识plugin:
+plugin是插件，通常是用于对某个现有架构进行扩展，loader主要是用于转换某些类型的模块，它是一个转换器
+plugin是插件，它是对webpack本身的扩展，是一个扩展器
+plugin的使用过程：
+一：通过npm安装需要使用的plugin(某些webpack已经内置的插件不需要安装)
+二：在webpack.config.js中的plugins中配置插件
