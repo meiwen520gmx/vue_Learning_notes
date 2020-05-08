@@ -1,0 +1,16 @@
+.el-breadcrumb{
+  font-size: 18px;
+}
+.icon{
+  margin: 0 10px;
+  font-size: 18px;
+  color: #A0C5E8;
+  cursor: pointer;
+}
+.content{
+  margin: 20px 0;
+}
+/* .headerimg{
+  background-image: linear-gradient(to bottom , #fff 0%, #EAEAEA 10%,#fff 100%);
+  border: 1px solid #EAEAEA;
+} */
