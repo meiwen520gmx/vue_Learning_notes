@@ -20,6 +20,11 @@
       }
       .header {
         padding: 20px 30px 0 30px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .header .icon_seperate {
+        color: #cec6c6;
       }
       .btn_group {
         text-align: right;
@@ -57,11 +62,17 @@
   <body>
     <div id="app">
       <div class="header">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-        </el-breadcrumb>
+        <div>
+          <span v-if="path === ''" @click="getFileList('')">媒体库</span>
+          <div v-else>
+            <span @click="getFileList('')">媒体库</span>
+            <span
+              v-for="(item,index) in pathArr"
+              @click="handleJoin(pathArr,index)"
+              ><span class="icon_seperate">/</span>{{item}}</span
+            >
+          </div>
+        </div>
       </div>
       <div class="btn_group">
         <el-button type="info" plain>创建文件夹</el-button>
@@ -125,6 +136,9 @@
             </template>
           </el-table-column>
         </el-table>
+        <input type="text" v-model="path" />
+        <h2>{{path}}</h2>
+        <h2>{{pathArr}}</h2>
         <!-- </el-col> -->
         <!-- <el-col :span="4">
             <div class="search_box">
@@ -141,10 +155,23 @@
 
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
     <script>
+      //去掉空值
+      Array.prototype.notempty = function () {
+        var arr = [];
+        this.map(function (val, index) {
+          //过滤规则为，不为空串、不为null、不为undefined，也可自行修改
+          if (val !== "" && val != undefined) {
+            arr.push(val);
+          }
+        });
+        return arr;
+      };
       const app = new Vue({
         el: "#app",
         data: {
+          path: "",
           isEdit: 0,
           tableData: [
             {
@@ -191,7 +218,26 @@
             },
           ],
         },
+        computed: {
+          pathArr() {
+            if (this.path !== "") {
+              let patharr = this.path.split("/").notempty();
+              return patharr;
+            } else {
+              return;
+            }
+          },
+        },
         methods: {
+          //处理path
+          handleJoin(arr, index) {
+            arr.splice(index + 1, this.pathArr.length - index - 1);
+            arr.join('/')
+            this.path = '/'+arr.join('/')+'/'
+            console.log(this.path);
+          },
+          //获取数据
+          getFileList(path) {},
           //编辑文件名
           handleEdit(id) {
             this.isEdit = id;

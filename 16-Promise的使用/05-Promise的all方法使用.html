@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      Promise.all([
+        // new Promise((resolve, reject) => {
+        //   $.ajax({
+        //     url: 'url1',
+        //     success(data){
+        //       resolve(data)
+        //     }
+        //   })
+        // }),
+        // new Promise((resolve, reject) => {
+        //   $.ajax({
+        //     url: 'url2',
+        //     success(data){
+        //       resolve(data)
+        //     }
+        //   })
+        // }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("第一次请求的结果");
+          }, 1000);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve("第二次请求的结果");
+          }, 1300);
+        }),
+      ]).then((results) => {
+        //results[0]第一次网络请求的结果
+        //results[1]第二次网络请求的结果
+        console.log(results);//["第一次请求的结果", "第二次请求的结果"]
+        
+      });
+    </script>
+  </body>
+</html>
