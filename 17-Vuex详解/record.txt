@@ -1,0 +1,2 @@
+只有export default ...  才可以这样导入  import 方法名  from 文件路径
+普通的： export const   这样导入   import { 对象名 } from '路径'
