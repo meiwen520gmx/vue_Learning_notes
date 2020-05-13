@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h2>------------Show.vue----------</h2>
+     <h2>------------Show.vue----------</h2>
     <h3>my name is {{name}}</h3>
   </div>
 </template>

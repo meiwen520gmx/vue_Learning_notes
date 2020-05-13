@@ -1,6 +1,10 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
+// import state from './state'
+// import * as getters from './getters'
+// import * as mutations from './mutations'
+
 //1.安装插件
 Vue.use(Vuex)
 
@@ -13,7 +17,11 @@ const state = {
     {id: 2, name: 'lisi', age: 20},
     {id: 3, name: 'xiaohua', age: 15},
     {id: 4, name: 'jinjin', age: 22}
-  ]
+	],
+	info: {
+		name: 'kebi',
+		age: 40
+	}
 }
 
 const mutations = {
@@ -21,7 +29,16 @@ const mutations = {
   // 你可以在函数里修改 state,第二个参数传过来的参数
    saveName(state, name){
      state.username = name;
-   }
+	 },
+	 increment(state, num){
+		 state.count = state.count + num
+	 },
+	 updataInfo(state){
+		//  state.info.name = 'gmx'
+		// Vue.set(state.info, 'address', '重庆市渝中区')//响应式的
+		//该方式做不到响应式:delete state.info.age
+		Vue.delete(state.info, 'age')//响应式的
+	 }
 }
 
 const getters = {

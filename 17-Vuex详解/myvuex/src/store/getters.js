@@ -16,3 +16,10 @@ export function more20stu(state){
 export function more20stuLen(state, getters){
   return getters.more20stu.length
 }
+
+//拿到age大于用户传进来的age值的学生
+export function moreAgestu(state, getters){
+	return function (age){
+		return state.students.filter(s => s.age > age)
+	}
+}
