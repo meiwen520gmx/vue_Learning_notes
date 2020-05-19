@@ -21,7 +21,7 @@ new Vue({
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 
-
+//使用全局的axios和对应的配置在进行网络请求1，2
 //1.axios的基本使用
 //最简单的请求方式
 // axios({
@@ -52,6 +52,9 @@ new Vue({
 // })]).then( res => {
 //    console.log(res)//数组结构
 // })
+
+
+
 
 //3.创建对应的axios实例
 // const instance1 = axios.create({
@@ -96,7 +99,6 @@ import { request } from "./network/request"
 //     console.log(res)
 //   },
 //   failure: err => {
-
 //   }
 // })
 
