@@ -81,9 +81,9 @@ new Vue({
 // })
 
 
-//4.封装request模块
+//4.封装request模块   引入模块
 import { request } from "./network/request"
-// request({
+// request1({
 //   url: 'searchMusic'
 // }, res => {
 //   console.log(res)
@@ -91,7 +91,7 @@ import { request } from "./network/request"
 //   console.log(err)
 // })
 
-// request({
+// request2({
 //   baseConfig: {
 //     url: 'searchMusic'
 //   },
@@ -103,7 +103,7 @@ import { request } from "./network/request"
 // })
 
 
-request({
+request3({
   url: 'searchMusic'
 }).then(res => {
   console.log(res)
