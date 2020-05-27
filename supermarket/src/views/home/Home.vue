@@ -3,12 +3,15 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <div class="heihei"></div>
+    <swiper>
+				<swiper-item></swiper-item>
+		</swiper>
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
+import { Swiper, SwiperItem } from "components/common/swiper";
 // import { getHomeMultidata } from "network/home";
 export default {
   data() {
@@ -23,7 +26,9 @@ export default {
     // })
   },
   components: {
-    NavBar
+		NavBar,
+		Swiper,
+		SwiperItem
   }
 };
 </script>
