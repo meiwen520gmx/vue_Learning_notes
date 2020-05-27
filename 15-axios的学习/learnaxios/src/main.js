@@ -42,16 +42,27 @@ new Vue({
 // })
 
 // //2.axios发送并发请求
-// axios.all([axios({
-//   url: 'http://route.showapi.com/109-35'
-// }),axios({
-//   url: 'https://api.apiopen.top/searchMusic',
-//   params: {
-//     name: '我爱你'
-//   }
-// })]).then( res => {
-//    console.log(res)//数组结构
-// })
+axios.all([axios({
+  url: 'http://route.showapi.com/109-35'
+}),axios({
+  url: 'https://api.apiopen.top/searchMusic',
+  params: {
+    name: '我爱你'
+  }
+})]).then( res => {
+   console.log(res)//数组结构
+})
+//也可以把结果分开展示
+axios.all([axios({
+  url: 'http://route.showapi.com/109-35'
+}),axios({
+  url: 'https://api.apiopen.top/searchMusic',
+  params: {
+    name: '我爱你'
+  }
+})]).then(axios.spread((res1, res2) => {
+	  console.log(res1, res2)
+}))
 
 //3.创建对应的axios实例
 // const instance1 = axios.create({
