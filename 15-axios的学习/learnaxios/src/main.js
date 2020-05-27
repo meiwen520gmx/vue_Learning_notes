@@ -21,7 +21,7 @@ new Vue({
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 
-
+//使用全局的axios和对应的配置在进行网络请求1，2
 //1.axios的基本使用
 //最简单的请求方式
 // axios({
@@ -64,6 +64,9 @@ axios.all([axios({
 	  console.log(res1, res2)
 }))
 
+
+
+
 //3.创建对应的axios实例
 // const instance1 = axios.create({
 //   baseURL: 'http://route.showapi.com/',
@@ -89,9 +92,9 @@ axios.all([axios({
 // })
 
 
-//4.封装request模块
+//4.封装request模块   引入模块
 import { request } from "./network/request"
-// request({
+// request1({
 //   url: 'searchMusic'
 // }, res => {
 //   console.log(res)
@@ -99,7 +102,7 @@ import { request } from "./network/request"
 //   console.log(err)
 // })
 
-// request({
+// request2({
 //   baseConfig: {
 //     url: 'searchMusic'
 //   },
@@ -107,12 +110,11 @@ import { request } from "./network/request"
 //     console.log(res)
 //   },
 //   failure: err => {
-
 //   }
 // })
 
 
-request({
+request3({
   url: 'searchMusic'
 }).then(res => {
   console.log(res)

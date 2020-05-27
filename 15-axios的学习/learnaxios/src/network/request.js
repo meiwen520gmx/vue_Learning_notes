@@ -1,6 +1,11 @@
 import axios from "axios";
 
-// export function request(config,success,failure){
+
+// export default是导出一个东西，export function是导出多个东西
+
+//方法一：
+// export function request1(config,success,failure){
+//     1.创建axios实例
 //     const instance = axios.create({
 //         baseURL: 'https://api.apiopen.top/',
 //         timeout: 5000
@@ -12,8 +17,20 @@ import axios from "axios";
 //         failure(err)
 //     })
 // }
+//使用：
+//引入模块
+// import { request1 } from "./network/request"
+// request1({
+//   url: 'searchMusic'
+// }, res => {
+//   console.log(res)
+// }, err => {
+//   console.log(err)
+// })
 
-// export function request(config){
+
+//方法二：
+// export function request2(config){
 //     const instance = axios.create({
 //         baseURL: 'https://api.apiopen.top/',
 //         timeout: 5000
@@ -25,8 +42,22 @@ import axios from "axios";
 //         config.failure(err)
 //     })
 // }
+//使用：
+// request2({
+//   baseConfig: {
+//     url: 'searchMusic'
+//   },
+//   success: res => {
+//     console.log(res)
+//   },
+//   failure: err => {
+//   }
+// })
 
-// export function request(config) {
+
+
+//方法三：
+// export function request3(config) {
 //   return new Promise((resolve, reject) => {
 //     const instance = axios.create({
 //       baseURL: "https://api.apiopen.top/",
@@ -41,8 +72,17 @@ import axios from "axios";
 //       });
 //   });
 // }
+//使用：
+// request3({
+//   url: 'searchMusic'
+// }).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 
-export function request(config) {
+//方法四：
+export function request4(config) {
   const instance = axios.create({
     baseURL: "https://api.apiopen.top/",
     timeout: 5000
@@ -66,5 +106,13 @@ export function request(config) {
   })
 
 
-  return instance(config);
+  return instance(config);//返回一个promise
 }
+//使用：
+// request4({
+//   url: 'searchMusic'
+// }).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
