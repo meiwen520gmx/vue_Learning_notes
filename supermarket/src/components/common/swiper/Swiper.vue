@@ -65,9 +65,10 @@ export default {
 		startTimer() {
 			this.playTimer = window.setInterval(() => {
 				this.currentIndex++;
-				this.scrollContent(-this.currentIndex * this.totalWidth);
+        this.scrollContent(-this.currentIndex * this.totalWidth);
 			}, this.interval)
-		},
+    },
+    
 		stopTimer(){
 			window.clearInterval(this.playTimer);
 		},
@@ -78,7 +79,7 @@ export default {
 			this.scrolling = true;
 
 			//1.开始滚动动画
-			this.swiperStyle.transition = 'transform'+this.animDuration+'ms';
+			this.swiperStyle.transition = 'transform'+this.animDuration+'ms ease';
 			this.setTransform(currentPosition);
 
 			//2.判断滚动到的位置
@@ -125,11 +126,11 @@ export default {
 
 			//3.如果大于1个，那么在前后分别添加一个slide
 			if(this.slideCount > 1){
-				let cloneFirst = slidesEls[0].cloneNode(true);
+        let cloneFirst = slidesEls[0].cloneNode(true);
 				let cloneLast = slidesEls[this.slideCount - 1].cloneNode(true);
 				swiperEl.insertBefore(cloneLast, slidesEls[0]);
 				swiperEl.appendChild(cloneFirst);
-				this.totalWidth = swiperEl.offsetWidth;
+        this.totalWidth = swiperEl.offsetWidth;//获取每张图片的宽度
 				this.swiperStyle = swiperEl.style;
 			}
 
@@ -153,14 +154,14 @@ export default {
 			//1.计算出用户拖动的距离
 			this.currentX = e.touches[0].pageX;
 			this.distance = this.currentX - this.startX;
-			let currenPosition = -this.currentIndex * this.totalWidth;
+			let currentPosition = -this.currentIndex * this.totalWidth;
 			let moveDistance = this.distance + currentPosition;
 
 			//2.设置当前的位置
 			this.setTransform(moveDistance);
 		},
 
-		touchEnd(e){
+		touchEnd(){
 			//1.获取移动的距离
 			let currenMove = Math.abs(this.distance);
 
@@ -188,7 +189,7 @@ export default {
 		},
 
 		next(){
-			this.changeItem(1);
+      this.changeItem(1);
 		},
 
 		changeItem(num){
@@ -200,7 +201,7 @@ export default {
 			this.scrollContent(-this.currentIndex * this.totalWidth);
 
 			//3.添加定时器
-			this/startTimer();
+			this.startTimer();
 		}
 
 
