@@ -18,6 +18,6 @@
 
 .slide img{
 	width: 100%;
-  height: 260px;
+  height: 240px;
 }
 </style>
