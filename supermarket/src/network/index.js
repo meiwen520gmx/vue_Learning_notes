@@ -4,7 +4,7 @@ export function request(config) {
   //1.创建axios实例
   const instance = axios.create({
     timeout: 5000,
-    baseURL: "https://api.apiopen.top/",
+    baseURL: "http://mockjs.com/api",
     headers: {
       "Content-Type": "application/json;charset=UTF-8"
     }
@@ -27,3 +27,20 @@ export function request(config) {
   //3.发送真正的网络请求
   return instance(config);
 }
+
+
+// export function fetch(url, params){
+//   return new Promise((resolve, reject) => {
+//     axios.post(url, params).then(res => {
+//       resolve(res.data)
+//     }).catch(err => {
+//        reject(err)
+//     })
+//   })
+// }
+
+// export default {
+//   http_mock(url, params){
+//     return fetch(url, params);
+//   }
+// }

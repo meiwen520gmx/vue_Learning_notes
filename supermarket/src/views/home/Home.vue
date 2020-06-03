@@ -6,7 +6,11 @@
     <home-swiper :banner="banner"></home-swiper>
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view :features="features"></feature-view>
-    <tab-control class="tab-control" :titles="['流行', '新款', '精选']"></tab-control>
+    <tab-control
+      class="tab-control"
+      :titles="['流行', '新款', '精选']"
+    ></tab-control>
+    <goods-list :goods="goods['pop'].list"></goods-list>
     <ul>
       <li>列表1</li>
       <li>列表2</li>
@@ -69,113 +73,35 @@ import FeatureView from "./childComps/FeatureView";
 //公共组件：
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
+import GoodsList from "components/content/goods/GoodsList";
 
-// import { getHomeMultidata } from "network/home";
+
+import {
+  getBannerData,
+  getRecommendData,
+  getFeaturesData,
+  getHomeGoods
+} from "network/home";
 export default {
   data() {
     return {
-      banner: [
-        {
-          height: 390,
-          height923: 390,
-          image: "https://ftp.bmp.ovh/imgs/2020/06/368a81b958a627e6.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/368a81b958a627e6.jpg",
-          title: "换新女装街",
-          width: 750,
-          width923: 750
+      banner: [],
+      recommends: [],
+      features: [],
+      goods: {
+        pop: {
+          page: 0,
+          list: []
         },
-        {
-          height: 390,
-          height923: 390,
-          image: "https://ftp.bmp.ovh/imgs/2020/06/7d5859afb087f2f9.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/7d5859afb087f2f9.jpg",
-          title: "换新女装街",
-          width: 750,
-          width923: 750
+        new: {
+          page: 0,
+          list: []
         },
-        {
-          height: 390,
-          height923: 390,
-          image: "https://ftp.bmp.ovh/imgs/2020/06/2e6996c3070f4b1b.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/2e6996c3070f4b1b.jpg",
-          title: "换新女装街",
-          width: 750,
-          width923: 750
-        },
-        {
-          height: 390,
-          height923: 390,
-          image: "https://ftp.bmp.ovh/imgs/2020/06/8bd257e4cd8231ff.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/8bd257e4cd8231ff.jpg",
-          title: "换新女装街",
-          width: 750,
-          width923: 750
+        sell: {
+          page: 0,
+          list: []
         }
-      ],
-      recommends: [
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/7d7f5dc8a6fcd6e7.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/7d7f5dc8a6fcd6e7.jpg",
-          title: "换新女装街"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/2aa6f944e2c9b36d.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/2aa6f944e2c9b36d.jpg",
-          title: "时尚大品牌"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/678d71a051e48664.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/678d71a051e48664.jpg",
-          title: "第一无二"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/cb86400494975622.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/cb86400494975622.jpg",
-          title: "时装秀"
-        }
-      ],
-      features: [
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/7d7f5dc8a6fcd6e7.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/7d7f5dc8a6fcd6e7.jpg",
-          title: "换新女装街"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/2aa6f944e2c9b36d.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/2aa6f944e2c9b36d.jpg",
-          title: "时尚大品牌"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/678d71a051e48664.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/678d71a051e48664.jpg",
-          title: "第一无二"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/cb86400494975622.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/cb86400494975622.jpg",
-          title: "时装秀"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/7d7f5dc8a6fcd6e7.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/7d7f5dc8a6fcd6e7.jpg",
-          title: "换新女装街"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/2aa6f944e2c9b36d.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/2aa6f944e2c9b36d.jpg",
-          title: "时尚大品牌"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/678d71a051e48664.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/678d71a051e48664.jpg",
-          title: "第一无二"
-        },
-        {
-          image: "https://ftp.bmp.ovh/imgs/2020/06/cb86400494975622.jpg",
-          link: "https://ftp.bmp.ovh/imgs/2020/06/cb86400494975622.jpg",
-          title: "时装秀"
-        }
-      ]
+      }
     };
   },
   created() {
@@ -185,13 +111,52 @@ export default {
     // getHomeMultidata().then(res => {
     //   console.log(res)
     // })
+    this.getHomeGoods('pop');//请求流行数据
+    this.getHomeGoods('new');//请求新款数据
+    this.getHomeGoods('sell');//请求精选数据
+    this.getBannerData(); //请求首页轮播图
+    this.getRecommendData();
+    this.getFeaturesData();
+  },
+  methods: {
+    getHomeGoods(type) {
+      const page = this.goods[type].page + 1;
+      getHomeGoods(type, page).then(res => {
+        this.goods[type].list.push(...res.data);
+        this.goods[type].page += 1;
+      });
+      console.log(this.goods)
+    },
+
+    getBannerData() {
+      getBannerData().then(res => {
+        if (res.code == 200) {
+          this.banner = res.data;
+        }
+      });
+    },
+    getRecommendData() {
+      getRecommendData().then(res => {
+        if (res.code == 200) {
+          this.recommends = res.data;
+        }
+      });
+    },
+    getFeaturesData() {
+      getFeaturesData().then(res => {
+        if (res.code == 200) {
+          this.features = res.data;
+        }
+      });
+    }
   },
   components: {
     HomeSwiper,
     RecommendView,
     FeatureView,
     NavBar,
-    TabControl
+    TabControl,
+    GoodsList
   }
 };
 </script>
@@ -209,8 +174,8 @@ export default {
   top: 0;
   z-index: 9;
 }
-.tab-control{
-  position: sticky;//兼容性较差
+.tab-control {
+  position: sticky; //兼容性较差
   top: 44px;
 }
 </style>
