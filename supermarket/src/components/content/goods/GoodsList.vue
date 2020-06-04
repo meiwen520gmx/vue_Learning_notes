@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <goods-list-item v-for="(item, index) in goods" :key="index" >
+    <goods-list-item v-for="(item, index) in goods" :key="index" :goodsItem="item">
     </goods-list-item>
   </div>
 </template>
@@ -22,4 +22,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.goods{
+  padding-left: 2%;
+}
+</style>

@@ -9,8 +9,9 @@
     <tab-control
       class="tab-control"
       :titles="['流行', '新款', '精选']"
+      @tabClick="tabClick"
     ></tab-control>
-    <goods-list :goods="goods['pop'].list"></goods-list>
+    <goods-list :goods="showGoods"></goods-list>
     <ul>
       <li>列表1</li>
       <li>列表2</li>
@@ -75,7 +76,6 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 
-
 import {
   getBannerData,
   getRecommendData,
@@ -101,8 +101,14 @@ export default {
           page: 0,
           list: []
         }
-      }
+      },
+      currentType: "pop"
     };
+  },
+  computed: {
+    showGoods() {
+      return this.goods[this.currentType].list
+    }
   },
   created() {
     //函数调用--> 压入函数栈（保存函数调用过程中所有变量）
@@ -111,23 +117,42 @@ export default {
     // getHomeMultidata().then(res => {
     //   console.log(res)
     // })
-    this.getHomeGoods('pop');//请求流行数据
-    this.getHomeGoods('new');//请求新款数据
-    this.getHomeGoods('sell');//请求精选数据
+    this.getHomeGoods("pop"); //请求流行数据
+    this.getHomeGoods("new"); //请求新款数据
+    this.getHomeGoods("sell"); //请求精选数据
     this.getBannerData(); //请求首页轮播图
     this.getRecommendData();
     this.getFeaturesData();
   },
   methods: {
+    /**
+     * 事件监听相关的方法
+     */
+    tabClick(index) {
+      switch (index) {
+        case 0:
+          this.currentType = "pop";
+          break;
+        case 1:
+          this.currentType = "new";
+          break;
+        case 2:
+          this.currentType = "sell";
+          break;
+      }
+    },
+
+    /**
+     * 网络请求相关的方法
+     */
     getHomeGoods(type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data);
         this.goods[type].page += 1;
       });
-      console.log(this.goods)
+      console.log(this.goods);
     },
-
     getBannerData() {
       getBannerData().then(res => {
         if (res.code == 200) {

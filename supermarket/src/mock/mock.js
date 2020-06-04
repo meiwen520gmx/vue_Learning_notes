@@ -57,8 +57,8 @@ const goods = req => {
   for (let i = 0; i < 8; i++) {
     let newList = {
       title: Random.cword(5, 15),
-      image: Random.dataImage("200x390"),
-      link: Random.dataImage("200x390"),
+      image: Random.dataImage("200x250"),
+      link: Random.dataImage("200x250"),
       price: Random.natural(60, 999),
       collectionnum: Random.integer(0,1000)
     };
