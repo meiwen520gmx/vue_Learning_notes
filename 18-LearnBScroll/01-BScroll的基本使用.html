@@ -16,6 +16,7 @@
     <div>
       <div class="wrapper">
         <ul class="content">
+					<button class="btn">点击</button>
           <li>列表数据1</li>
           <li>列表数据2</li>
           <li>列表数据3</li>
@@ -124,11 +125,35 @@
     <script>
       // 任何时候如果出现无法滚动的情况，都应该首先查看 content 元素高度/宽度是否大于 wrapper 的高度/宽度。这是内容能够滚动的前提条件。
       //better-scroll的使用：https://better-scroll.github.io/docs/zh-CN/guide/use.html
-      const scroll = new BScroll(".wrapper");
+			//默认情况下BScroll是不可以实时的监听滚动位置
+			const scroll = new BScroll(".wrapper", {
+				//0,1都是不侦测实时的位置
+				//2:在手指滚动的过程中侦测，手指离开后的惯性滚动过程中不侦测
+				//3:只要是滚动，都侦测
+				probeType: 2,
+				click: true,
+				pullUpLoad: true
+			});
+
       function onScroll (pos){
-        console.log("x:"+pos.x,"y:"+pos.y)
-      }
-      scroll.on('scroll', onScroll)
+        // console.log("x:"+pos.x,"y:"+pos.y)
+			}
+			
+			scroll.on('scroll', onScroll);//监听滚动事件
+			scroll.on("pullingUp", () => {
+				console.log("上拉加载更多");
+				//发送网络请求，请求更多页的数据
+
+				//等数据请求完成，并且将新的数据展示出来后
+				setTimeout(() => {
+					scroll.finishPullUp();
+				}, 2000)
+			})
+
+
+			document.querySelector(".btn").addEventListener("click", function(){
+				console.log("21111111111")
+			})
     </script>
   </body>
 </html>
