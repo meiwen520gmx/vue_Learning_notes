@@ -110,8 +110,21 @@ import BScroll from "better-scroll";
   export default {
     mounted () {
        let bs = new BScroll(".wrapper", {
-
+          probeType: 2,
+          pullUpLoad: true
       });
+      //监听滚动
+      bs.on("scroll", (position) => {
+        // console.log(position)
+      })
+      //监听加载更多
+      bs.on("pullingUp", () => {
+        console.log("上拉加载更多");
+        //网络请求更多的数据后
+        setTimeout(() => {
+          bs.finishPullUp();
+        },1000)
+      })
     },
   }
 </script>

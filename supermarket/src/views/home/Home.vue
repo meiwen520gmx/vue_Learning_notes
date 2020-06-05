@@ -3,15 +3,23 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <home-swiper :banner="banner"></home-swiper>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view :features="features"></feature-view>
-    <tab-control
-      class="tab-control"
-      :titles="['流行', '新款', '精选']"
-      @tabClick="tabClick"
-    ></tab-control>
-    <goods-list :goods="showGoods"></goods-list>
+    <scroll class="content" ref="scrollBS">
+      <home-swiper :banner="banner"></home-swiper>
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view :features="features"></feature-view>
+      <tab-control
+        class="tab-control"
+        :titles="['流行', '新款', '精选']"
+        @tabClick="tabClick"
+      ></tab-control>
+      <goods-list :goods="showGoods"></goods-list>
+    </scroll>
+    <!-- 一、组件是不能监听点击 -->
+    <!-- <back-top ref="backTop"></back-top> -->
+
+    <!-- 二、.native修饰符：当我们需要监听一个组件的原生事件时，必须给对应的事件加上.native修饰符，才能进行监听 -->
+    <back-top @click.native="backTop"></back-top>
+
     <ul>
       <li>列表1</li>
       <li>列表2</li>
@@ -75,6 +83,8 @@ import FeatureView from "./childComps/FeatureView";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
+import Scroll from "components/common/scroll/Scroll";
+import BackTop from "components/content/backTop/BackTop";
 
 import {
   getBannerData,
@@ -105,9 +115,15 @@ export default {
       currentType: "pop"
     };
   },
+  mounted() {
+    //一、监听子组件的点击事件
+    // this.$refs.backTop.$el.addEventListener("click", function() {
+    //   console.log("21111111111");
+    // });
+  },
   computed: {
     showGoods() {
-      return this.goods[this.currentType].list
+      return this.goods[this.currentType].list;
     }
   },
   created() {
@@ -140,6 +156,10 @@ export default {
           this.currentType = "sell";
           break;
       }
+    },
+    backTop(){
+      //调用子组件的方法
+      this.$refs.scrollBS.scrollTo(0, 0, 800);
     },
 
     /**
@@ -181,7 +201,9 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
   }
 };
 </script>
@@ -189,6 +211,7 @@ export default {
 <style lang="less" scoped>
 .home {
   padding-top: 44px;
+  height: 100vh; //视口高度 vh->viewheight
 }
 .home-nav {
   background-color: @colorTint;
@@ -200,7 +223,11 @@ export default {
   z-index: 9;
 }
 .tab-control {
-  position: sticky; //兼容性较差
-  top: 44px;
+  // position: sticky; //兼容性较差
+  // top: 44px;
+}
+.content {
+  height: calc(100% - 93px); //父级高度设置为100vh才会是视图的高度
+  overflow: hidden;
 }
 </style>
