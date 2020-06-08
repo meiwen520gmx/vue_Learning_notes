@@ -42,7 +42,9 @@ export default {
       // setTimeout(() => {
       //   this.scroll.finishPullUp();
       // }, 1000);
-    });
+		});
+		
+		// this.scroll.refresh();
   },
   methods: {
     //回到顶部
