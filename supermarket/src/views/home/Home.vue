@@ -3,7 +3,14 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <scroll class="content" ref="scrollBS">
+    <scroll
+      class="content"
+      ref="scrollBS"
+      :probe-type="3"
+      :pull-up-load="true"
+      @scroll="contentScroll"
+      @pullUpLoad="pullUpLoad"
+    >
       <home-swiper :banner="banner"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view :features="features"></feature-view>
@@ -18,7 +25,7 @@
     <!-- <back-top ref="backTop"></back-top> -->
 
     <!-- 二、.native修饰符：当我们需要监听一个组件的原生事件时，必须给对应的事件加上.native修饰符，才能进行监听 -->
-    <back-top @click.native="backTop"></back-top>
+    <back-top @click.native="backTop" v-show="isShow"></back-top>
 
     <ul>
       <li>列表1</li>
@@ -112,7 +119,8 @@ export default {
           list: []
         }
       },
-      currentType: "pop"
+      currentType: "pop",
+      isShow: false
     };
   },
   mounted() {
@@ -157,9 +165,18 @@ export default {
           break;
       }
     },
-    backTop(){
+    backTop() {
       //调用子组件的方法
       this.$refs.scrollBS.scrollTo(0, 0, 800);
+    },
+    contentScroll(position) {
+      this.isShow = -position.y > 1000;
+    },
+    pullUpLoad() {
+      this.getHomeGoods(this.currentType);
+      //以防止图片加载过慢导致better-scroll计算可滚动距离有误。图片加载过快就不会出现可滚动距离有误，图片加载过慢会导致可滚动距离变短
+      //所以以防万一，等每次请求完毕后重新刷新页面计算可滚动距离
+      this.$refs.scrollBS.scroll.refresh();//这一步很关键
     },
 
     /**
@@ -170,8 +187,8 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data);
         this.goods[type].page += 1;
+        this.$refs.scrollBS.finishPullUp();
       });
-      console.log(this.goods);
     },
     getBannerData() {
       getBannerData().then(res => {
