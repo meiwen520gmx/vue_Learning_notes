@@ -57,10 +57,32 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
           }
         }
          ```
+
 #### 2. 发送数据请求
-* 在home.js中封装getHomeGoods(type,page)
-* 在Home.vue中的methods中封装getHomeGoods(type)
-* 在页面初始时调用getHomeGoods('pop')/getHomeGoods('new')/getHomeGoods('sell')
-   * page:动态的获取对应的page
-* 获取数据res
-   * this.goods[type].list.push(...res.data);
+
+- 在 home.js 中封装 getHomeGoods(type,page)
+- 在 Home.vue 中的 methods 中封装 getHomeGoods(type)
+- 在页面初始时调用 getHomeGoods('pop')/getHomeGoods('new')/getHomeGoods('sell')
+  - page:动态的获取对应的 page
+- 获取数据 res
+  - this.goods[type].list.push(...res.data);
+  - this.goods[type].page += 1;
+
+#### 3.对商品数据进行展示
+
+##### 封装 GoodsList.vue 组件
+
+- 在 Home.vue 中计算属性计算出 showGoods，当前展示哪一个 tab 选项内容，通过点击 TabControl 来改变当前的 currentType
+
+```
+     showGoods() {
+        return this.goods[this.currentType].list;
+      }
+```
+* 把showGoods传入GoodsList组件中props:goods -> list[8]
+* v-for goods -> GoodsListItem[8]
+* GoodsListItem组件 -> GoodsItem数据
+
+##### 封装 GoodsListItem.vue 组件
+* props:GoodsItem
+* GoodsItem取出数据进行渲染
