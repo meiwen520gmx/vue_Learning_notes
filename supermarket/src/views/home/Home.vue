@@ -26,58 +26,6 @@
 
     <!-- 二、.native修饰符：当我们需要监听一个组件的原生事件时，必须给对应的事件加上.native修饰符，才能进行监听 -->
     <back-top @click.native="backTop" v-show="isShow"></back-top>
-
-    <ul>
-      <li>列表1</li>
-      <li>列表2</li>
-      <li>列表3</li>
-      <li>列表4</li>
-      <li>列表5</li>
-      <li>列表6</li>
-      <li>列表7</li>
-      <li>列表8</li>
-      <li>列表9</li>
-      <li>列表10</li>
-      <li>列表11</li>
-      <li>列表12</li>
-      <li>列表13</li>
-      <li>列表14</li>
-      <li>列表15</li>
-      <li>列表16</li>
-      <li>列表17</li>
-      <li>列表18</li>
-      <li>列表19</li>
-      <li>列表20</li>
-      <li>列表7</li>
-      <li>列表8</li>
-      <li>列表9</li>
-      <li>列表10</li>
-      <li>列表11</li>
-      <li>列表12</li>
-      <li>列表13</li>
-      <li>列表14</li>
-      <li>列表15</li>
-      <li>列表16</li>
-      <li>列表17</li>
-      <li>列表18</li>
-      <li>列表19</li>
-      <li>列表20</li>
-      <li>列表20</li>
-      <li>列表7</li>
-      <li>列表8</li>
-      <li>列表9</li>
-      <li>列表10</li>
-      <li>列表11</li>
-      <li>列表12</li>
-      <li>列表13</li>
-      <li>列表14</li>
-      <li>列表15</li>
-      <li>列表16</li>
-      <li>列表17</li>
-      <li>列表18</li>
-      <li>列表19</li>
-      <li>列表20</li>
-    </ul>
   </div>
 </template>
 
@@ -93,6 +41,8 @@ import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
 
+//公共方法
+import { debounce } from "common/utils"
 import {
   getBannerData,
   getRecommendData,
@@ -129,7 +79,7 @@ export default {
     //   console.log("21111111111");
     // });
 
-    const refresh = this.debounce(this.$refs.scrollBS.refresh, 200)
+    const refresh = debounce(this.$refs.scrollBS.refresh, 200)
     //监听item中图片加载完成
     this.$bus.$on("itemImageLoad", () => {
       // this.$refs.scrollBS.refresh()这个会执行很多次，给服务器造成了很多压力，对此进行优化使用防抖函数：;
@@ -160,16 +110,6 @@ export default {
     /**
      * 事件监听相关的方法
      */
-    //防抖函数
-    debounce(func, delay){
-      let timer = null;
-      return function(...args){
-        if(timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          func.apply(this, args)
-        }, delay)
-      }
-    },
     tabClick(index) {
       switch (index) {
         case 0:
