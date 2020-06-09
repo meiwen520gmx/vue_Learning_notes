@@ -53,6 +53,7 @@ export default {
       this.scroll && this.scroll.finishPullUp();
     },
     refresh(){
+      // console.log("---------")
       //逻辑判断，先判断是否有值，再调用方法
       this.scroll && this.scroll.refresh();
     }

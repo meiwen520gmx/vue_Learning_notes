@@ -129,9 +129,12 @@ export default {
     //   console.log("21111111111");
     // });
 
+    const refresh = this.debounce(this.$refs.scrollBS.refresh, 200)
     //监听item中图片加载完成
     this.$bus.$on("itemImageLoad", () => {
-      this.$refs.scrollBS.refresh();
+      // this.$refs.scrollBS.refresh()这个会执行很多次，给服务器造成了很多压力，对此进行优化使用防抖函数：;
+      //防抖
+      refresh();
     });
   },
   computed: {
@@ -157,6 +160,16 @@ export default {
     /**
      * 事件监听相关的方法
      */
+    //防抖函数
+    debounce(func, delay){
+      let timer = null;
+      return function(...args){
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args)
+        }, delay)
+      }
+    },
     tabClick(index) {
       switch (index) {
         case 0:

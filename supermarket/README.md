@@ -156,7 +156,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 - `this.scroll && this.scroll.refresh();`
 
-#### 在 Home.vue 组件中，不能在 created 中监听图片加载完成之后去拿 refs，在能够保证this.$refs.scrollBS有值的情况下，在 mounted 下进行监听
+#### 在 Home.vue 组件中，不能在 created 中监听图片加载完成之后去拿 refs，在能够保证 this.\$refs.scrollBS 有值的情况下，在 mounted 下进行监听
 
 ```
 mounted() {
@@ -166,3 +166,33 @@ mounted() {
     });
   },
 ```
+
+### 七、对于 refresh 调用比较频繁的问题，进行防抖操作
+
+- 防抖 debounce/节流 throttle
+- 防抖函数起作用的过程：
+  - 如果我们直接执行 refresh,那么 refresh 函数会被执行多次，给服务器造成很大的压力
+  - 可以吧 refresh 函数传入到 debounce 函数中生成一个新的函数
+  - 之后调用非常频繁的时候，使用新生成的函数
+  - 而新生成的函数，并不会非常频繁的调用，如果下一次执行来得非常快，那么会将上一次的取消掉
+  ```
+   //防抖函数
+    debounce(func, delay){
+      let timer = null;
+      return function(...args){
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args)
+        }, delay)
+      }
+    },
+  ```
+  ```
+  mounted() {
+    const refresh = this.debounce(this.$refs.scrollBS.refresh, 200)
+    this.$bus.$on("itemImageLoad", () => {
+      //调用新生成的函数
+      refresh();
+    });
+  },
+  ```
