@@ -128,6 +128,11 @@ export default {
     // this.$refs.backTop.$el.addEventListener("click", function() {
     //   console.log("21111111111");
     // });
+
+    //监听item中图片加载完成
+    this.$bus.$on("itemImageLoad", () => {
+      this.$refs.scrollBS.refresh();
+    });
   },
   computed: {
     showGoods() {
@@ -176,7 +181,7 @@ export default {
       this.getHomeGoods(this.currentType);
       //以防止图片加载过慢导致better-scroll计算可滚动距离有误。图片加载过快就不会出现可滚动距离有误，图片加载过慢会导致可滚动距离变短
       //所以以防万一，等每次请求完毕后重新刷新页面计算可滚动距离
-      this.$refs.scrollBS.scroll.refresh();//这一步很关键
+      this.$refs.scrollBS.scroll.refresh(); //这一步很关键
     },
 
     /**

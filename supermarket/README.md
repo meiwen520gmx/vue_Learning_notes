@@ -30,14 +30,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 # 重点记录
 
-### TabControl 组件的封装
+### 一、TabControl 组件的封装
 
 - props -> titles
 - div:根据 titles v-for 循环遍历 span{{title}}
 - css 编写
 - 选中哪一个 tab,哪一个 tab 的文字颜色变色，通过 currentIndex
 
-### 首页商品数据的请求
+### 二、首页商品数据的请求
 
 #### 1. 设计数据结构，用户保存数据
 
@@ -79,45 +79,90 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
         return this.goods[this.currentType].list;
       }
 ```
-* 把showGoods传入GoodsList组件中props:goods -> list[8]
-* v-for goods -> GoodsListItem[8]
-* GoodsListItem组件 -> GoodsItem数据
+
+- 把 showGoods 传入 GoodsList 组件中 props:goods -> list[8]
+- v-for goods -> GoodsListItem[8]
+- GoodsListItem 组件 -> GoodsItem 数据
 
 ##### 封装 GoodsListItem.vue 组件
-* props:GoodsItem
-* GoodsItem取出数据进行渲染
 
+- props:GoodsItem
+- GoodsItem 取出数据进行渲染
 
-### 对滚动进行重构：Better-Scroll
-#### 1.在index.html中使用Better-Scroll
-* const bscroll = new BScroll(el, { })
-* 注意：wrapper -> content ->很多内容，滚动的前提就是content中内容已经超出了wrapper固定高度，
-* BetterScroll 只处理容器（wrapper）的第一个子元素（content）的滚动，其它的元素都会被忽略
-* 监听滚动：
-  * probeType:0/1/2(监听手指滚动)/3（只要是滚动都监听）
-  * bscroll.on('scroll', (position) => {})
-* 上拉加载
-  * pullUpLoad:true
-  * bscroll.on('pullingUp', () => {})
-* click:false
-  * button可以监听点击
-  * div不可以，必须设置click:true才能实现点击
+### 三、对滚动进行重构：Better-Scroll
 
-#### 2.在Vue中使用Better-Scroll
-* 对BetterScroll进行封装：Scroll.vue
-* Home.vue与Scroll.vue之间进行通信
-  * Home.vue将probeType设置为3
-  * Scroll.vue需要通过$emit,实时将事件发送到Home.vue
+#### 1.在 index.html 中使用 Better-Scroll
 
-### 回到顶部BackTop
+- const bscroll = new BScroll(el, { })
+- 注意：wrapper -> content ->很多内容，滚动的前提就是 content 中内容已经超出了 wrapper 固定高度，
+- BetterScroll 只处理容器（wrapper）的第一个子元素（content）的滚动，其它的元素都会被忽略
+- 监听滚动：
+  - probeType:0/1/2(监听手指滚动)/3（只要是滚动都监听）
+  - bscroll.on('scroll', (position) => {})
+- 上拉加载
+  - pullUpLoad:true
+  - bscroll.on('pullingUp', () => {})
+- click:false
+  - button 可以监听点击
+  - div 不可以，必须设置 click:true 才能实现点击
 
-#### 1.封装BackTop.vue组件
-* 不可以直接监听组件点击，必须添加修饰符.native
-* 回到顶部：通过ref拿到scroll对象，scroll.scrollTop(x, y, time)
-* this.$refs.scrollBS.scrollTop(0, 0, 500)
+#### 2.在 Vue 中使用 Better-Scroll
 
-#### 2.BackTop.vue组件的显示和隐藏
-* isShow:false
-* 监听滚动，拿到滚动的位置：
-  * -position.y > 1000 -> isShow:true
-  * isShow = -(potition.y > 1000)
+- 对 BetterScroll 进行封装：Scroll.vue
+- Home.vue 与 Scroll.vue 之间进行通信
+  - Home.vue 将 probeType 设置为 3
+  - Scroll.vue 需要通过\$emit,实时将事件发送到 Home.vue
+
+### 四、回到顶部 BackTop
+
+#### 1.封装 BackTop.vue 组件
+
+- 不可以直接监听组件点击，必须添加修饰符.native
+- 回到顶部：通过 ref 拿到 scroll 对象，scroll.scrollTop(x, y, time)
+- this.\$refs.scrollBS.scrollTop(0, 0, 500)
+
+#### 2.BackTop.vue 组件的显示和隐藏
+
+- isShow:false
+- 监听滚动，拿到滚动的位置：
+  - -position.y > 1000 -> isShow:true
+  - isShow = -(potition.y > 1000)
+
+### 五、如何解决 BetterScroll 可滚动区域的问题？
+
+#### BetterScroll 在决定有多少区域可以滚动时，是根据 scrollerHeight 属性决定的
+
+- scrollerHeight 属性是根据放在 BetterScroll 的 content 中的子组件的高度来计算的
+- 但是在首页中，刚开始计算 scrollerHeight 属性时，是没有将图片高度计算在内
+- 所以，计算出来的可滚动高度是错误的
+- 等图片加载完毕有了新的高度，但是 scrollerHeight 并没有进行更新
+- 所以滚动出现了问题（目前还没确定这个 bug 修复没有）
+
+#### 如何解决这个问题？
+
+- 监听每一张图片是否加载完毕，只要有一张图片加载完成了，执行一次 refresh()
+- 如何监听图片加载完成了？
+  - 原生的 js 监听图片：img.onload = function()
+  - Vue 中监听：@load="方法名"
+  - 调用 scroll 的 refresh()
+  - 这个过程涉及到非父子组件的通信，推荐使用事件总线\$bus
+  - 首先挂载：`Vue.prototype.$bus = new Vue();`
+  - 然后发送：`this.$bus.$emit("事件名", 参数);`
+  - 最后监听：`this.$bus.$on("事件名", () => {console.log("图片加载完毕");this.$refs.scrollBS.refresh();})`
+
+### 六、refresh 找不到的问题
+
+#### 在 Scroll.vue 组件中，调用 this.scroll 的方法之前，都要判断 this.scroll 对象是否有值
+
+- `this.scroll && this.scroll.refresh();`
+
+#### 在 Home.vue 组件中，不能在 created 中监听图片加载完成之后去拿 refs，在能够保证this.$refs.scrollBS有值的情况下，在 mounted 下进行监听
+
+```
+mounted() {
+    //监听item中图片加载完成
+    this.$bus.$on("itemImageLoad", () => {
+      this.$refs.scrollBS.refresh();
+    });
+  },
+```

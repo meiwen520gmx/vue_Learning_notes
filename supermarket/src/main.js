@@ -8,6 +8,7 @@ import mock from "./mock/mock";
 // axios.defaults.baseURL = "http://mockjs.com/api";
 
 // Vue.prototype.$http = axios;
+Vue.prototype.$bus = new Vue();
 Vue.config.productionTip = false;
 
 new Vue({

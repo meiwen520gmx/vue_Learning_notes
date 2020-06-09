@@ -36,24 +36,25 @@ export default {
     });
     //监听加载更多
     this.scroll.on("pullingUp", () => {
-      console.log("上拉加载更多");
       this.$emit("pullUpLoad");
       //网络请求更多的数据后
       // setTimeout(() => {
       //   this.scroll.finishPullUp();
       // }, 1000);
 		});
-		
-		// this.scroll.refresh();
   },
   methods: {
     //回到顶部
     scrollTo(x, y, time = 500) {
-      this.scroll.scrollTo(x, y, time);
+      this.scroll && this.scroll.scrollTo(x, y, time);
     },
     //请求完数据后调用此方法
     finishPullUp() {
-      this.scroll.finishPullUp();
+      this.scroll && this.scroll.finishPullUp();
+    },
+    refresh(){
+      //逻辑判断，先判断是否有值，再调用方法
+      this.scroll && this.scroll.refresh();
     }
   }
 };
