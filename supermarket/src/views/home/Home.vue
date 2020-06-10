@@ -3,6 +3,12 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
+    <tab-control
+      v-show="isTabFixed"
+      :titles="['流行', '新款', '精选']"
+      @tabClick="tabClick"
+      ref="tabControl1"
+    ></tab-control>
     <scroll
       class="content"
       ref="scrollBS"
@@ -11,13 +17,16 @@
       @scroll="contentScroll"
       @pullUpLoad="pullUpLoad"
     >
-      <home-swiper :banner="banner"></home-swiper>
+      <home-swiper
+        :banner="banner"
+        @swiperImageLoad="swiperImageLoad"
+      ></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view :features="features"></feature-view>
       <tab-control
-        class="tab-control"
         :titles="['流行', '新款', '精选']"
         @tabClick="tabClick"
+        ref="tabControl"
       ></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
@@ -42,7 +51,7 @@ import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
 
 //公共方法
-import { debounce } from "common/utils"
+import { debounce } from "common/utils";
 import {
   getBannerData,
   getRecommendData,
@@ -70,8 +79,22 @@ export default {
         }
       },
       currentType: "pop",
-      isShow: false
+      isShow: false,
+      tabOffsetTop: 0,
+      isTabFixed: false,
+      saveY: 0
     };
+  },
+  destroyed() {
+    // console.log("销毁")
+  },
+  activated() {
+    console.log(this.saveY)
+    this.$refs.scrollBS.scrollTo(0, this.saveY, 0);
+    this.$refs.scrollBS.refresh();
+  },
+  deactivated() {
+    this.saveY = this.$refs.scrollBS.getScrollY();
   },
   mounted() {
     //一、监听子组件的点击事件
@@ -79,7 +102,7 @@ export default {
     //   console.log("21111111111");
     // });
 
-    const refresh = debounce(this.$refs.scrollBS.refresh, 200)
+    const refresh = debounce(this.$refs.scrollBS.refresh, 200);
     //监听item中图片加载完成
     this.$bus.$on("itemImageLoad", () => {
       // this.$refs.scrollBS.refresh()这个会执行很多次，给服务器造成了很多压力，对此进行优化使用防抖函数：;
@@ -122,19 +145,30 @@ export default {
           this.currentType = "sell";
           break;
       }
+      this.$refs.tabControl1.currentIndex = index;
+      this.$refs.tabControl.currentIndex = index;
     },
     backTop() {
       //调用子组件的方法
       this.$refs.scrollBS.scrollTo(0, 0, 800);
     },
     contentScroll(position) {
+      //1.判断BackTop是否显示
       this.isShow = -position.y > 1000;
+      //2.决定tabControl是否吸顶（position: fixed）
+      this.isTabFixed = -position.y > this.tabOffsetTop ? true : false;
     },
     pullUpLoad() {
       this.getHomeGoods(this.currentType);
       //以防止图片加载过慢导致better-scroll计算可滚动距离有误。图片加载过快就不会出现可滚动距离有误，图片加载过慢会导致可滚动距离变短
       //所以以防万一，等每次请求完毕后重新刷新页面计算可滚动距离
-      this.$refs.scrollBS.scroll.refresh(); //这一步很关键
+      // this.$refs.scrollBS.scroll.refresh(); //在这里不用刷新一次了，因为前面已经对图片加载完成进行一个监听，然后刷新页面重新计算可滚动距离，所以这里就不用了刷新了
+    },
+    swiperImageLoad() {
+      //所有的组件都有一个属性$el:用于获取组件中的元素
+      // console.log(this.$refs.tabControl.$el.offsetTop);
+      //轮播图加载完成拿到tabControl的offsetTop
+      this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
     },
 
     /**
@@ -185,22 +219,23 @@ export default {
 
 <style lang="less" scoped>
 .home {
-  padding-top: 44px;
+  // padding-top: 44px;
   height: 100vh; //视口高度 vh->viewheight
 }
 .home-nav {
   background-color: @colorTint;
   color: #fff;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 9;
+  //在使用浏览器原生滚动时，为了让导航不跟随一起滚动
+  // position: fixed;
+  // left: 0;
+  // right: 0;
+  // top: 0;
+  // z-index: 9;
 }
-.tab-control {
-  // position: sticky; //兼容性较差
-  // top: 44px;
-}
+// .fixed {
+//   // position: sticky; //兼容性较差
+//   // top: 44px;
+// }
 .content {
   height: calc(100% - 93px); //父级高度设置为100vh才会是视图的高度
   overflow: hidden;

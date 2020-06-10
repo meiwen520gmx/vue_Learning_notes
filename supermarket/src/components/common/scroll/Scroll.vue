@@ -31,17 +31,22 @@ export default {
       click: true
     });
     //监听滚动的位置
-    this.scroll.on("scroll", position => {
-      this.$emit("scroll", position);
-    });
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on("scroll", position => {
+        this.$emit("scroll", position);
+      });
+    }
+
     //监听加载更多
-    this.scroll.on("pullingUp", () => {
-      this.$emit("pullUpLoad");
-      //网络请求更多的数据后
-      // setTimeout(() => {
-      //   this.scroll.finishPullUp();
-      // }, 1000);
-		});
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        this.$emit("pullUpLoad");
+        //网络请求更多的数据后
+        // setTimeout(() => {
+        //   this.scroll.finishPullUp();
+        // }, 1000);
+      });
+    }
   },
   methods: {
     //回到顶部
@@ -52,10 +57,13 @@ export default {
     finishPullUp() {
       this.scroll && this.scroll.finishPullUp();
     },
-    refresh(){
+    refresh() {
       // console.log("---------")
       //逻辑判断，先判断是否有值，再调用方法
       this.scroll && this.scroll.refresh();
+    },
+    getScrollY(){
+      return this.scroll ? this.scroll.y : 0
     }
   }
 };

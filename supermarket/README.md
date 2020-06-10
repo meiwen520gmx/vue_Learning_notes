@@ -196,3 +196,28 @@ mounted() {
     });
   },
   ```
+### 八、tabControl的吸顶效果
+#### 1.获取到tabControl的offsetTop值
+* 必须知道滚动到哪个位置，开始有吸顶效果，这个时候就需要获取tabControl的offsetTop
+* 但是，如果直接在mounted中获取tabControl的offsetTop，那么值是不正确的，因为还有图片没有加载完
+* 如何获取正确的值？
+  * 监听HomeSwiper中的img的加载完成
+  * 加载完成后，发出事件，在Home.vue中，获取正确的值
+  * 为了不让HomeSwiper多次发出事件（因为有多张轮播图）
+  * 可以使用isLoad变量来进行状态的记录，发送一次事件设置isLoad为true就可以了
+#### 2.监听滚动，动态改变tabControl的样式
+* 问题：动态的改变tabControl的样式时，会出现两个问题：
+  * 问题一：下面的商品内容，会突然上移
+  * 问题二：tabControl虽然设置了fixed,但是也会随着BetterScroll一起滚出去
+* 其他方案来解决停留问题
+  * 在最上面nav-bar下，多复制一份TabControl组件对象进行占位，利用它来实现停留效果
+  * 当用户滚动到一定位置时，TabControl显示出来
+  * 当用户滚动到没有达到一定位置时，TabControl隐藏起来
+
+### 九、让Home保持原来的状态
+#### 让Home不要随意销毁掉
+* keep-alive
+#### 让Home中的内容保持原来的位置
+* 离开时，保存一个位置信息saveY
+* 进来时，将位置设置为原来保存的位置saveY信息
+  * 注意：最好回来时，进行一次refresh()

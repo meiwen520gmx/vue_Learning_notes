@@ -2,7 +2,7 @@
   <swiper>
     <swiper-item v-for="(item, index) in banner" :key="index">
       <a :href="item.link">
-        <img :src="item.image" alt="" />
+        <img :src="item.image" alt="" @load="imageLoad" />
       </a>
     </swiper-item>
   </swiper>
@@ -14,17 +14,26 @@ export default {
   props: {
     banner: {
       type: Array,
-      default(){
-        return []
+      default() {
+        return [];
       }
     }
   },
   data() {
     return {
-     
+      isLoad: false,//记录有没有发送事件
     };
   },
-   components: {
+  methods: {
+    imageLoad() {
+      //只需要发送一次事件就可以了
+      if (!this.isLoad) {
+        this.$emit("swiperImageLoad");
+        this.isLoad = true;
+      }
+    }
+  },
+  components: {
     Swiper,
     SwiperItem
   }
