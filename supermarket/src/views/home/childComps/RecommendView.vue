@@ -27,9 +27,7 @@ import GoodsItem from "./GoodsItem"
 <style lang="less" scoped>
 .recommend{
   padding: 15px 0 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  .fj(space-around, center);
   border-bottom: 8px solid #eee;
 }
 

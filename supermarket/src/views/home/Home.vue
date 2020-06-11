@@ -89,7 +89,6 @@ export default {
     // console.log("销毁")
   },
   activated() {
-    console.log(this.saveY)
     this.$refs.scrollBS.scrollTo(0, this.saveY, 0);
     this.$refs.scrollBS.refresh();
   },

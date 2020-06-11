@@ -117,6 +117,7 @@
 <script>
 import BScroll from "better-scroll";
 export default {
+  name: "category",
   mounted() {
     let bs = new BScroll(".wrapper", {
       probeType: 2,

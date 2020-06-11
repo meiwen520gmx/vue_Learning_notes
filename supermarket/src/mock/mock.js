@@ -34,7 +34,7 @@ const recommends = req => {
   }
   return { code, data: _data }; //返回状态码和推荐数据
 };
-Mock.mock(`${domain}/recommends`, "get", recommends)
+Mock.mock(`${domain}/recommends`, "get", recommends);
 
 //本周流行
 const features = req => {
@@ -49,21 +49,59 @@ const features = req => {
   }
   return { code, data: _data };
 };
-Mock.mock(`${domain}/features`, "get", features)
+Mock.mock(`${domain}/features`, "get", features);
 
 //tab流行新款精选
 const goods = req => {
   let _data = [];
   for (let i = 0; i < 8; i++) {
     let newList = {
+      id: Random.integer(0, 1000),
       title: Random.cword(5, 15),
       image: Random.dataImage("200x250"),
       link: Random.dataImage("200x250"),
       price: Random.natural(60, 999),
-      collectionnum: Random.integer(0,1000)
+      collectionnum: Random.integer(0, 1000)
     };
     _data.push(newList);
   }
   return { code, data: _data };
 };
-Mock.mock(RegExp(domain+'.*'), "get", goods)
+Mock.mock(RegExp(`${domain}/goods` + ".*"), "get", goods);
+
+//商品详情页数据
+const detail = options => {
+  let result = {
+    id: options.url.split("=")[1],
+    goodsInfo: {
+      desc: Random.cword(20, 50),
+      price: Random.natural(60, 999),
+      columns: [
+        "销量" + Random.integer(0, 1000),
+        "收藏" + Random.integer(0, 1000) + "人",
+        "默认快递"
+      ]
+    },
+    isLogin: false,
+    topImages: [
+      Random.dataImage("390x390"),
+      Random.dataImage("390x390"),
+      Random.dataImage("390x390")
+    ],
+    shopInfo: {
+      avator: Random.dataImage("50x50"),
+      shopName: Random.cword(5, 10),
+      TotalSale: Random.float(10, 100),
+      TotalGoods: Random.natural(50, 999),
+      score: [
+        { name: "描述相符", score: Random.float(1, 9) },
+        { name: "价格合理", score: Random.float(1, 9) },
+        { name: "质量满意", score: Random.float(1, 9) }
+      ]
+    },
+    price: Random.natural(60, 999),
+    collectionnum: Random.integer(0, 1000)
+  };
+  return { code, data: result };
+};
+Mock.mock(RegExp(`${domain}/detail` + ".*"), "get", detail);

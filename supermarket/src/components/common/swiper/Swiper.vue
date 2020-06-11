@@ -209,7 +209,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 #hy-swiper{
 	overflow: hidden;
 	position: relative;
@@ -218,8 +218,7 @@ export default {
 	display: flex;
 }
 .indicator{
-	display: flex;
-	justify-content: center;
+	.fj(center);
 	position: absolute;
 	width: 100%;
 	bottom: 8px;

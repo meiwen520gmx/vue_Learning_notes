@@ -26,10 +26,8 @@ export default {
 
 <style lang="less" scoped>
 .goods-item {
-  display: flex;
+  .fj(center, center);
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-size: 13px;
   text-align: center;
 }

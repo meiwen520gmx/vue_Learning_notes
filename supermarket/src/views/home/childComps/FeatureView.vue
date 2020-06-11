@@ -41,10 +41,8 @@ h3 {
   font-weight: bold;
 }
 .feature {
-  display: flex;
-  align-items: center;
+  .fj(space-around, center);
   flex-wrap: wrap;
-  justify-content: space-around;
   border-bottom: 8px solid #eee;
 }
 .feature-box {
