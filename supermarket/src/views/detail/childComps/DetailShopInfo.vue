@@ -6,7 +6,7 @@
     <div class="shop-content">
       <div class="content-left">
         <section>
-          <p class="numr">{{ shop.TotalSale }}万</p>
+          <p class="numr">{{ toFix(shop.TotalSale, 1) }}万</p>
           <p class="text">总销量</p>
         </section>
         <section>
@@ -15,69 +15,30 @@
         </section>
       </div>
       <div class="content-right">
-        <div v-for="(item, index) in shop.score" :key="index" class="score-item">
+        <div
+          v-for="(item, index) in shop.score"
+          :key="index"
+          class="score-item"
+        >
           <span>{{ item.name }}</span>
-          <span :class="item.score >= 5 ? 'red' : 'green'">{{ item.score.toFixed(2) }}</span>
-          <span :class="item.score >= 5 ? 'red' : 'green'">{{ item.score >= 5 ? "高" : "低" }}</span>
+          <span :class="item.score >= 5 ? 'red' : 'green'">{{
+            toFix(item.score, 1)
+          }}</span>
+          <span :class="item.score >= 5 ? 'red' : 'green'">{{
+            item.score >= 5 ? "高" : "低"
+          }}</span>
         </div>
       </div>
     </div>
-    <ul>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-      <li>hahah</li>
-    </ul>
+    <div class="shop-btn">
+      <button>进店逛逛</button>
+    </div>
   </div>
 </template>
 
 <script>
+//公共方法
+import { toFix } from "common/utils";
 export default {
   name: "detailShopInfo",
   props: {
@@ -87,19 +48,23 @@ export default {
         return {};
       }
     }
-  }
+  },
+  methods: {
+    toFix
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.red{
+.red {
   color: @colorHithText;
 }
-.green{
+.green {
   color: @green;
 }
 .shop-info {
   padding: 20px 10px;
+  border-bottom: 3px solid @lineColor;
   .shop-header {
     .fj(flex-start, center);
     font-size: @h3Size;
@@ -113,32 +78,39 @@ export default {
     padding: 0 20px;
     color: #000;
     .fj(space-between, center);
-    .content-left{
+    .content-left {
       flex: 1;
       .fj(space-around, center);
       border-right: 1px solid @lineColor;
-      section{
+      section {
         text-align: center;
-        .numr{
+        .numr {
           font-size: @h3Size;
           font-weight: bold;
           padding-bottom: 5px;
         }
-        .text{
+        .text {
           font-size: @smallText;
         }
       }
     }
-    .content-right{
+    .content-right {
       flex: 1;
       text-align: center;
       font-size: @smallText;
-      .score-item{
+      .score-item {
         line-height: 25px;
-        span{
+        span {
           padding: 0 5px;
         }
       }
+    }
+  }
+  .shop-btn{
+    text-align: center;
+    padding: 10px 0;
+    button{
+      padding: 10px 20px;
     }
   }
 }

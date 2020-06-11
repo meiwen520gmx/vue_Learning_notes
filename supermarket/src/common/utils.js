@@ -10,3 +10,12 @@ export function debounce(func, delay){
     }, delay)
   }
 }
+
+//保留两位小数
+export function toFix(num1, num2){
+  if(typeof(num1) == 'undefined'){
+    return num1
+  }else{
+    return Number(num1.toFixed(num2))
+  }
+}
