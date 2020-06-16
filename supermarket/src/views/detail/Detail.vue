@@ -1,10 +1,12 @@
 <template>
   <div id="detail">
     <detail-nav-bar></detail-nav-bar>
-    <scroll class="content">
+    <scroll class="content" ref="scroll">
       <detail-swiper :banner="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
+      <goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"></goods-info>
+      <detail-params-info :paramsInfo="paramsInfo"></detail-params-info>
       <ul>
         <li>11</li>
         <li>11</li>
@@ -27,6 +29,8 @@ import DetailSwiper from "./childComps/DetailSwiper";
 import DetailBaseInfo from "./childComps/DetailBaseInfo";
 import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
+import GoodsInfo from "./childComps/GoodsInfo";
+import DetailParamsInfo from "./childComps/DetailParamInfo";
 
 import Scroll from "components/common/scroll/Scroll";
 import { getDetail } from "network/detail";
@@ -37,7 +41,9 @@ export default {
       id: null,
       topImages: [],
       goods: {},
-      shop: {}
+      shop: {},
+      detailInfo: {},
+      paramsInfo: {}
     };
   },
   created() {
@@ -46,6 +52,9 @@ export default {
   },
   mounted() {},
   methods: {
+    imageLoad(){
+      this.$refs.scroll.refresh()
+    },
     getDetail() {
       getDetail(this.id).then(res => {
         if (res.code == 200) {
@@ -54,9 +63,12 @@ export default {
           this.topImages = res.data.topImages;
           //2.获取商品相关信息
           this.goods = res.data.goodsInfo;
-
           //3.获取店铺信息的对象
           this.shop = res.data.shopInfo;
+          //4.获取商品详情数据
+          this.detailInfo = res.data.detailInfo;
+          //5.获取参数信息
+          this.paramsInfo = res.data.itemParams
         }
       });
     }
@@ -67,7 +79,9 @@ export default {
     DetailBaseInfo,
     DetailShopInfo,
     DetailGoodsInfo,
-    Scroll
+    Scroll,
+    GoodsInfo,
+    DetailParamsInfo
   }
 };
 </script>

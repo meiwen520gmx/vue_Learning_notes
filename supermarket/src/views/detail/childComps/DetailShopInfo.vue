@@ -99,9 +99,11 @@ export default {
       text-align: center;
       font-size: @smallText;
       .score-item {
+        margin-left: 20px;
         line-height: 25px;
+        .fj(center,center);
         span {
-          padding: 0 5px;
+          flex: 1;
         }
       }
     }

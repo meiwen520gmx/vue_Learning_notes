@@ -100,7 +100,44 @@ const detail = options => {
       ]
     },
     price: Random.natural(60, 999),
-    collectionnum: Random.integer(0, 1000)
+    collectionnum: Random.integer(0, 1000),
+    detailInfo:{
+      desc: "【"+ Random.cword(5, 10)+"】",
+      detailImage: [{key: "穿着效果", list:[
+        Random.dataImage("380x250"),
+        Random.dataImage("380x250"),
+        Random.dataImage("380x250"),
+      ]}],
+      priceDesc: Random.cword(80, 150)
+    },
+    itemParams: {
+      info: {
+        key: "产品参数",
+        set: [
+          {key: "图案", value: Random.cword(5, 10)},
+          {key: "厂名", value: Random.cword(5, 10)},
+          {key: "颜色", value: Random.cword(5, 10)},
+          {key: "袖型", value: Random.cword(5, 10)},
+          {key: "尺码", value: Random.cword(5, 10)},
+          {key: "衣长", value: Random.cword(5, 10)},
+          {key: "版型", value: Random.cword(5, 10)},
+          {key: "季节", value: Random.cword(5, 10)},
+          {key: "风格", value: Random.cword(5, 10)}
+        ]
+      },
+      rule: {
+        anchor: "size_info",
+        disclaimer: Random.cword(10, 20),
+        key: "尺码说明",
+        tables: [
+          ['尺码', 'M','L','XL','XXL'],
+          ['衣长','61.5','63','64.5','66'],
+          ['胸围','98','104','110','116'],
+          ['袖长','63','66','68.5','70.5']
+        ]
+      },
+      image:Random.dataImage("380x250")
+    }
   };
   return { code, data: result };
 };
