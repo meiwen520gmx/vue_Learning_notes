@@ -32,7 +32,7 @@ export default {
 .param-info {
   padding: 20px 15px;
   border-top: 3px solid @lineColor;
-  border-bottom: 5px solid @lineColor;
+  border-bottom: 3px solid @lineColor;
   table{
     width: 100%;
     border-collapse: collapse;

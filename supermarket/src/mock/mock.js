@@ -137,7 +137,13 @@ const detail = options => {
         ]
       },
       image:Random.dataImage("380x250")
-    }
+    },
+    comment: [
+      {avator: Random.dataImage("50x50"), name: Random.cword(2, 10), cont: Random.cword(10, 50), time: Random.date(), color: "白色", size: "M"},
+      {avator: Random.dataImage("50x50"), name: Random.cword(2, 10), cont: Random.cword(10, 50), time: Random.date(), color: "白色", size: "L"},
+      {avator: Random.dataImage("50x50"), name: Random.cword(2, 10), cont: Random.cword(10, 50), time: Random.date(), color: "白色", size: "M"},
+      {avator: Random.dataImage("50x50"), name: Random.cword(2, 10), cont: Random.cword(10, 50), time: Random.date(), color: "白色", size: "XL"}
+    ]
   };
   return { code, data: result };
 };

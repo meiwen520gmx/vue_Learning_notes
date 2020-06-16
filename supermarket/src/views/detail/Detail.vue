@@ -7,18 +7,8 @@
       <detail-shop-info :shop="shop"></detail-shop-info>
       <goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"></goods-info>
       <detail-params-info :paramsInfo="paramsInfo"></detail-params-info>
-      <ul>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-        <li>11</li>
-      </ul>
+      <detail-comment :comment="comment"></detail-comment>
+      <goods-list :goods="showGoods"></goods-list>
     </scroll>
   </div>
 </template>
@@ -31,9 +21,12 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import GoodsInfo from "./childComps/GoodsInfo";
 import DetailParamsInfo from "./childComps/DetailParamInfo";
+import DetailComment from "./childComps/DetailComment";
 
 import Scroll from "components/common/scroll/Scroll";
+import GoodsList from "components/content/goods/GoodsList";
 import { getDetail } from "network/detail";
+import { getHomeGoods } from "network/home";
 export default {
   name: "detail",
   data() {
@@ -43,14 +36,19 @@ export default {
       goods: {},
       shop: {},
       detailInfo: {},
-      paramsInfo: {}
+      paramsInfo: {},
+      comment: [],
+      showGoods: [],
+      page: 0
     };
   },
   created() {
     this.id = this.$route.query.id;
     this.getDetail();
   },
-  mounted() {},
+  mounted() {
+    this.getHomeGoods("pop");
+  },
   methods: {
     imageLoad(){
       this.$refs.scroll.refresh()
@@ -68,10 +66,18 @@ export default {
           //4.获取商品详情数据
           this.detailInfo = res.data.detailInfo;
           //5.获取参数信息
-          this.paramsInfo = res.data.itemParams
+          this.paramsInfo = res.data.itemParams;
+          //6.获取评论数据
+          this.comment = res.data.comment;
         }
       });
-    }
+    },
+    //7.获取推荐数据
+    getHomeGoods(type) {
+      getHomeGoods(type, this.page).then(res => {
+        this.showGoods.push(...res.data);
+      });
+    },
   },
   components: {
     DetailNavBar,
@@ -81,7 +87,9 @@ export default {
     DetailGoodsInfo,
     Scroll,
     GoodsInfo,
-    DetailParamsInfo
+    DetailParamsInfo,
+    DetailComment,
+    GoodsList
   }
 };
 </script>
