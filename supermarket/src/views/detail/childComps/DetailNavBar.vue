@@ -52,9 +52,7 @@ export default {
 }
 .back {
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .fj(center,center);
 }
 .back img{
   width: 25px;

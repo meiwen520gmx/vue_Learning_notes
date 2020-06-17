@@ -52,6 +52,7 @@ import BackTop from "components/content/backTop/BackTop";
 
 //公共方法
 import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 import {
   getBannerData,
   getRecommendData,
@@ -59,6 +60,7 @@ import {
   getHomeGoods
 } from "network/home";
 export default {
+  mixins: [itemListenerMixin],
   data() {
     return {
       banner: [],
@@ -82,7 +84,8 @@ export default {
       isShow: false,
       tabOffsetTop: 0,
       isTabFixed: false,
-      saveY: 0
+      saveY: 0,
+      itemImgListener: null
     };
   },
   destroyed() {
@@ -94,6 +97,9 @@ export default {
   },
   deactivated() {
     this.saveY = this.$refs.scrollBS.getScrollY();
+
+    //取消全局事件的监听
+    this.$bus.$off("itemImageLoad", this.itemImgListener);
   },
   mounted() {
     //一、监听子组件的点击事件
@@ -102,12 +108,14 @@ export default {
     // });
 
     const refresh = debounce(this.$refs.scrollBS.refresh, 200);
-    //监听item中图片加载完成
-    this.$bus.$on("itemImageLoad", () => {
+
+    //对监听的事件进行保存
+    this.itemImgListener = () => {
       // this.$refs.scrollBS.refresh()这个会执行很多次，给服务器造成了很多压力，对此进行优化使用防抖函数：;
-      //防抖
       refresh();
-    });
+    };
+    //监听item中图片加载完成
+    this.$bus.$on("itemImageLoad", this.itemImgListener);
   },
   computed: {
     showGoods() {

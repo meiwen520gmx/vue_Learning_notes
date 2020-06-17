@@ -25,7 +25,17 @@ export default {
   },
   methods: {
     imageLoad() {
-      this.$bus.$emit("itemImageLoad");//发送到事件总线
+      //方法一：
+      // if(this.$route.path.indexOf('/home') !== -1){
+      //   console.log(this.$route.path)
+      //   this.$bus.$emit("itemImageLoad");//发送到事件总线
+      // }else if(this.$route.path.indexOf('/detail') !== -1){
+      //   this.$bus.$emit("detailImageLoad");
+      // }
+      //方法二
+      // this.$bus.$emit("itemImageLoad", this.$route.path);接收端判断路由后再决定要不要处理，这样做消耗性能，需要发事件这个行为，用了多少次这个组件就得发多少次事件
+      //方法三
+      this.$bus.$emit("itemImageLoad");//发送到事件总线 在相应的使用组件中进行处理
     },
     itemClick(){
       this.$router.push({path: '/detail', query: {id: this.goodsItem.id}})

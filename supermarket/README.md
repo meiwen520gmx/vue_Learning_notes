@@ -218,6 +218,8 @@ mounted() {
 #### 让Home不要随意销毁掉
 * keep-alive
 #### 让Home中的内容保持原来的位置
-* 离开时，保存一个位置信息saveY
-* 进来时，将位置设置为原来保存的位置saveY信息
+* 离开时deactivated，保存一个位置信息saveY
+* 进来时activated，通过scrollTop将位置设置为原来保存的位置saveY
   * 注意：最好回来时，进行一次refresh()
+  * bug:better-scroll的1.15.0有scrollTop的问题
+  * 解决方案：版本回退：1.13.2

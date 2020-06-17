@@ -25,10 +25,14 @@ import DetailComment from "./childComps/DetailComment";
 
 import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
+//公共方法
+import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 import { getDetail } from "network/detail";
 import { getHomeGoods } from "network/home";
 export default {
   name: "detail",
+  mixins: [itemListenerMixin],
   data() {
     return {
       id: null,
@@ -39,19 +43,30 @@ export default {
       paramsInfo: {},
       comment: [],
       showGoods: [],
-      page: 0
+      page: 0,
+      itemImgListener: null
     };
   },
   created() {
     this.id = this.$route.query.id;
     this.getDetail();
   },
+  destroyed() {
+    //取消全局事件的监听
+    this.$bus.$off("itemImageLoad", this.itemImgListener);
+  },
   mounted() {
     this.getHomeGoods("pop");
+
+    const refresh = debounce(this.$refs.scroll.refresh, 200);
+    this.itemImgListener = () => {
+      refresh();
+    };
+    this.$bus.$on("itemImageLoad", this.itemImgListener);
   },
   methods: {
-    imageLoad(){
-      this.$refs.scroll.refresh()
+    imageLoad() {
+      this.$refs.scroll.refresh();
     },
     getDetail() {
       getDetail(this.id).then(res => {
@@ -77,7 +92,7 @@ export default {
       getHomeGoods(type, this.page).then(res => {
         this.showGoods.push(...res.data);
       });
-    },
+    }
   },
   components: {
     DetailNavBar,
