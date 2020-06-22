@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     imageLoad() {
+      console.log(11111111)
       this.$refs.scroll.refresh();
     },
     getDetail() {

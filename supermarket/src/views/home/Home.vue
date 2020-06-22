@@ -97,7 +97,6 @@ export default {
   },
   deactivated() {
     this.saveY = this.$refs.scrollBS.getScrollY();
-
     //取消全局事件的监听
     this.$bus.$off("itemImageLoad", this.itemImgListener);
   },
@@ -106,9 +105,7 @@ export default {
     // this.$refs.backTop.$el.addEventListener("click", function() {
     //   console.log("21111111111");
     // });
-
     const refresh = debounce(this.$refs.scrollBS.refresh, 200);
-
     //对监听的事件进行保存
     this.itemImgListener = () => {
       // this.$refs.scrollBS.refresh()这个会执行很多次，给服务器造成了很多压力，对此进行优化使用防抖函数：;
@@ -175,7 +172,7 @@ export default {
       //所有的组件都有一个属性$el:用于获取组件中的元素
       // console.log(this.$refs.tabControl.$el.offsetTop);
       //轮播图加载完成拿到tabControl的offsetTop
-      this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
+      this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop + 40;
     },
 
     /**

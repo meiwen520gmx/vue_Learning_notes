@@ -3,16 +3,18 @@ import { debounce } from "common/utils";
 export const itemListenerMixin = {
   data() {
     return {
-      itemImgListener: null
-    }
+      itemImgListener: null,
+      refresh: null
+    };
+  },
+  destroyed() {
+    //取消全局事件的监听
+    this.$bus.$off("itemImageLoad", this.itemImgListener);
   },
   mounted() {
-    const refresh = debounce(this.$refs.scrollBS.refresh, 200);
-
-    //对监听的事件进行保存
+    this.refresh = debounce(this.$refs.scrollBS.refresh, 200);
     this.itemImgListener = () => {
-      // this.$refs.scrollBS.refresh()这个会执行很多次，给服务器造成了很多压力，对此进行优化使用防抖函数：;
-      refresh();
+      this.refresh();
     };
     //监听item中图片加载完成
     this.$bus.$on("itemImageLoad", this.itemImgListener);
