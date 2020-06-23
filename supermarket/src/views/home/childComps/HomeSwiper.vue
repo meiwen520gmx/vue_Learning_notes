@@ -10,7 +10,9 @@
 
 <script>
 import { Swiper, SwiperItem } from "components/common/swiper";
+import { imageListener } from "common/mixin";
 export default {
+  mixins: [imageListener],
   props: {
     banner: {
       type: Array,
@@ -21,17 +23,17 @@ export default {
   },
   data() {
     return {
-      isLoad: false,//记录有没有发送事件
+      // isLoad: false,//记录有没有发送事件
     };
   },
   methods: {
-    imageLoad() {
-      //只需要发送一次事件就可以了
-      if (!this.isLoad) {
-        this.$emit("swiperImageLoad");
-        this.isLoad = true;
-      }
-    }
+    // imageLoad() {
+    //   //只需要发送一次事件就可以了
+    //   if (!this.isLoad) {
+    //     this.$emit("swiperImageLoad");
+    //     this.isLoad = true;
+    //   }
+    // }
   },
   components: {
     Swiper,

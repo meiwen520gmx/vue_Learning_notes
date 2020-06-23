@@ -2,7 +2,7 @@
   <swiper>
     <swiper-item v-for="(item, index) in banner" :key="index">
       <a :href="item">
-        <img :src="item" alt="" />
+        <img :src="item" alt="" @load="imageLoad"/>
       </a>
     </swiper-item>
   </swiper>
@@ -10,7 +10,9 @@
 
 <script>
 import { Swiper, SwiperItem } from "components/common/swiper";
+import { imageListener } from "common/mixin";
 export default {
+  mixins: [imageListener],
   props: {
     banner: {
       type: Array,
@@ -19,10 +21,18 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      
+    }
+  },
   components: {
     Swiper,
     SwiperItem
-  }
+  },
+  methods: {
+    
+  },
 };
 </script>
 

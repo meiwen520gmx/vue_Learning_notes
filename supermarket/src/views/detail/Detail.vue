@@ -1,14 +1,20 @@
 <template>
   <div id="detail">
-    <detail-nav-bar></detail-nav-bar>
+    <detail-nav-bar @titleClick="titleClick"></detail-nav-bar>
     <scroll class="content" ref="scroll">
-      <detail-swiper :banner="topImages"></detail-swiper>
+      <detail-swiper
+        @swiperImageLoad="swiperImageLoad"
+        :banner="topImages"
+      ></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
       <goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"></goods-info>
-      <detail-params-info :paramsInfo="paramsInfo"></detail-params-info>
-      <detail-comment :comment="comment"></detail-comment>
-      <goods-list :goods="showGoods"></goods-list>
+      <detail-params-info
+        ref="params"
+        :paramsInfo="paramsInfo"
+      ></detail-params-info>
+      <detail-comment ref="comment" :comment="comment"></detail-comment>
+      <goods-list ref="recommend" :goods="showGoods"></goods-list>
     </scroll>
   </div>
 </template>
@@ -44,7 +50,8 @@ export default {
       comment: [],
       showGoods: [],
       page: 0,
-      itemImgListener: null
+      itemImgListener: null,
+      themeTopYs: [0, 1000, 2000, 3000]
     };
   },
   created() {
@@ -65,14 +72,32 @@ export default {
     this.$bus.$on("itemImageLoad", this.itemImgListener);
   },
   methods: {
+    /**
+     * 事件监听相关的方法
+     */
     imageLoad() {
-      console.log(11111111)
       this.$refs.scroll.refresh();
+      this.themeTopYs = [];
+      this.themeTopYs.push(0);
+      //图片加载完再进行取值
+      this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+      this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
     },
+    titleClick(index) {
+      console.log(this.themeTopYs[index])
+      this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 300);
+    },
+    swiperImageLoad() {},
+
+
+
+    /**
+     * 网络请求相关的方法
+     */
     getDetail() {
       getDetail(this.id).then(res => {
         if (res.code == 200) {
-          console.log(res);
           // 1.获取顶部的图片轮播数据
           this.topImages = res.data.topImages;
           //2.获取商品相关信息
@@ -85,6 +110,17 @@ export default {
           this.paramsInfo = res.data.itemParams;
           //6.获取评论数据
           this.comment = res.data.comment;
+          //第一次获取值：如果在这里取值offsetTop，值不对的原因就是：this.$refs.params.$el压根没有被渲染
+          // this.$nextTick(() => {
+          //第二次获取值：如果在这里取值offsetTop，值不对的原因就是：因为图片的问题
+          //根据最新的数据，对应的DOM是已经被渲染出来，但是图片依然没有加载完成（目前获取的offsetTop不包含其中的图片）
+          //offsetTop值不对的时候，都是因为图片的问题
+          //   this.themeTopYs = [];
+          //   this.themeTopYs.push(0);
+          //   this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+          //   this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+          //   this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+          // });
         }
       });
     },
