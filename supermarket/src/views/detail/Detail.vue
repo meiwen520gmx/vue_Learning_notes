@@ -1,7 +1,12 @@
 <template>
   <div id="detail">
-    <detail-nav-bar @titleClick="titleClick"></detail-nav-bar>
-    <scroll class="content" ref="scroll">
+    <detail-nav-bar @titleClick="titleClick" ref="detailNav"></detail-nav-bar>
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      @scroll="contentScroll"
+    >
       <detail-swiper
         @swiperImageLoad="swiperImageLoad"
         :banner="topImages"
@@ -51,7 +56,8 @@ export default {
       showGoods: [],
       page: 0,
       itemImgListener: null,
-      themeTopYs: [0, 1000, 2000, 3000]
+      themeTopYs: [0, 1000, 2000, 3000],
+      currentIndex: 0
     };
   },
   created() {
@@ -64,7 +70,6 @@ export default {
   },
   mounted() {
     this.getHomeGoods("pop");
-
     const refresh = debounce(this.$refs.scroll.refresh, 200);
     this.itemImgListener = () => {
       refresh();
@@ -83,14 +88,47 @@ export default {
       this.themeTopYs.push(this.$refs.params.$el.offsetTop);
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+
+      this.themeTopYs.push(Number.MAX_VALUE);
     },
     titleClick(index) {
-      console.log(this.themeTopYs[index])
+      console.log(this.themeTopYs[index]);
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 300);
     },
     swiperImageLoad() {},
+    contentScroll(position) {
+      //1.获取y值
+      const positionY = -position.y;
+      const { themeTopYs, currentIndex } = this;
+      let len = themeTopYs.length;
+      //2.positionY和主题中值进行对比
+      //[0 ,1969,2563,3165]
+      //positionY在0~1969之间，index = 0;
+      //positionY在=1969~2563之间，index = 1;
+      //positionY在=2563~3165之间，index = 2;
 
-
+      //positionY大于等于3165，index = 3;
+      for (let i = 0; i < len-1; i++) {
+        // if (
+        //   currentIndex !== i &&
+        //   ((i < len - 1 &&
+        //     positionY >= themeTopYs[i] &&
+        //     positionY < themeTopYs[i + 1]) ||
+        //     (i === len - 1 && positionY >= themeTopYs[i]))
+        // ) {
+        //   this.currentIndex = i;
+        //   this.$refs.detailNav.currentIndex = this.currentIndex;
+        // }
+        if (
+          currentIndex !== i &&
+          positionY >= themeTopYs[i] &&
+          positionY < this.themeTopYs[i + 1]
+        ) {
+          this.currentIndex = i;
+          this.$refs.detailNav.currentIndex = this.currentIndex;
+        }
+      }
+    },
 
     /**
      * 网络请求相关的方法

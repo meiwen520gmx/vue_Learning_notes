@@ -156,7 +156,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 - `this.scroll && this.scroll.refresh();`
 
-#### 在 Home.vue 组件中，不能在 created 中监听图片加载完成之后去拿 refs，在能够保证 this.\$refs.scrollBS 有值的情况下，在 mounted 下进行监听
+#### 在 Home.vue 组件中，不能在 created 中监听图片加载完成之后去拿 refs，在能够保证 this.$refs.scrollBS 有值的情况下，在 mounted 下进行监听
 
 ```
 mounted() {
@@ -235,3 +235,41 @@ mounted() {
     * （3）获取到数据的回调中也不行，DOM还没有被渲染完
     * （4）$nextTick也不行，因为图片的高度还没有被计算在内
     * （5）在图片加载完成后，获取的高度才是正确的
+#### 2.内容滚动，相对应的标题显示高亮
+* (1)普通做法：
+* 监听滚动，获取滚动的y值
+* y值与各标题的offsetTop进行比较
+* 判断条件如下：
+```
+for (let i = 0; i < len; i++) {
+        if (
+          currentIndex !== i &&
+          ((i < len - 1 &&
+            positionY >= themeTopYs[i] &&
+            positionY < themeTopYs[i + 1]) ||
+            (i === len - 1 && positionY >= themeTopYs[i]))
+        ) {
+          this.currentIndex = i;
+          this.$refs.detailNav.currentIndex = this.currentIndex;
+        }
+}
+```
+* 条件成立：`currentIndex = i`
+* 条件一：`currentIndex !== i`是为了防止赋值的过程过于频繁
+* 条件二：`((i < len - 1 && positionY >= themeTopYs[i] && positionY < themeTopYs[i + 1]) || (i === len - 1 && positionY >= themeTopYs[i])))`有两种情况
+     * 第一种情况：`(i < len - 1 && positionY >= themeTopYs[i] && positionY < themeTopYs[i + 1])`判断区间，在0和某个数字之间`i < len - 1`
+     * 第二种情况：`(i === len - 1 && positionY >= themeTopYs[i])`判断大于等于`i === len - 1`
+* (2)hack做法：
+* 给themeTopYs数组新添加一个非常大的值：`this.themeTopYs.push(Number.MAX_VALUE);`
+```
+for (let i = 0; i < len-1; i++) {
+        if (
+          currentIndex !== i &&
+          positionY >= themeTopYs[i] &&
+          positionY < this.themeTopYs[i + 1]
+        ) {
+          this.currentIndex = i;
+          this.$refs.detailNav.currentIndex = this.currentIndex;
+        }
+      }
+```
