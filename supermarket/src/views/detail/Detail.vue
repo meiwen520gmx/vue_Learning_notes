@@ -92,7 +92,7 @@ export default {
       product.price = this.goods.price;
       product.iid = this.id;
       //2.将商品添加到购物车里
-      this.$store.commit("addCart", product);
+      this.$store.dispatch("addCart", product);
     },
     backTop() {
       //调用子组件的方法
