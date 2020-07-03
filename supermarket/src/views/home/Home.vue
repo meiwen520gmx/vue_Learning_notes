@@ -52,7 +52,7 @@ import BackTop from "components/content/backTop/BackTop";
 
 //公共方法
 import { debounce } from "common/utils";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 import {
   getBannerData,
   getRecommendData,
@@ -60,7 +60,7 @@ import {
   getHomeGoods
 } from "network/home";
 export default {
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       banner: [],
@@ -81,7 +81,6 @@ export default {
         }
       },
       currentType: "pop",
-      isShow: false,
       tabOffsetTop: 0,
       isTabFixed: false,
       saveY: 0,
@@ -216,7 +215,6 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop
   }
 };
 </script>

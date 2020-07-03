@@ -21,6 +21,8 @@
       <detail-comment ref="comment" :comment="comment"></detail-comment>
       <goods-list ref="recommend" :goods="showGoods"></goods-list>
     </scroll>
+    <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
+    <back-top @click.native="backTop" v-show="isShow"></back-top>
   </div>
 </template>
 
@@ -33,17 +35,18 @@ import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import GoodsInfo from "./childComps/GoodsInfo";
 import DetailParamsInfo from "./childComps/DetailParamInfo";
 import DetailComment from "./childComps/DetailComment";
+import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
 //公共方法
 import { debounce } from "common/utils";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 import { getDetail } from "network/detail";
 import { getHomeGoods } from "network/home";
 export default {
   name: "detail",
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       id: null,
@@ -57,7 +60,7 @@ export default {
       page: 0,
       itemImgListener: null,
       themeTopYs: [0, 1000, 2000, 3000],
-      currentIndex: 0
+      currentIndex: 0,
     };
   },
   created() {
@@ -80,6 +83,21 @@ export default {
     /**
      * 事件监听相关的方法
      */
+    addToCart(){
+      //1.获取购物车需要展示的信息
+      const product = {}
+      product.image = this.topImages[0];
+      product.title = this.detailInfo.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.price;
+      product.iid = this.id;
+      //2.将商品添加到购物车里
+      this.$store.commit("addCart", product);
+    },
+    backTop() {
+      //调用子组件的方法
+      this.$refs.scroll.scrollTo(0, 0, 800);
+    },
     imageLoad() {
       this.$refs.scroll.refresh();
       this.themeTopYs = [];
@@ -97,6 +115,8 @@ export default {
     },
     swiperImageLoad() {},
     contentScroll(position) {
+      //1.判断BackTop是否显示
+      this.isShow = -position.y > 1000;
       //1.获取y值
       const positionY = -position.y;
       const { themeTopYs, currentIndex } = this;
@@ -108,7 +128,7 @@ export default {
       //positionY在=2563~3165之间，index = 2;
 
       //positionY大于等于3165，index = 3;
-      for (let i = 0; i < len-1; i++) {
+      for (let i = 0; i < len - 1; i++) {
         // if (
         //   currentIndex !== i &&
         //   ((i < len - 1 &&
@@ -175,6 +195,7 @@ export default {
     DetailBaseInfo,
     DetailShopInfo,
     DetailGoodsInfo,
+    DetailBottomBar,
     Scroll,
     GoodsInfo,
     DetailParamsInfo,
@@ -191,7 +212,7 @@ export default {
   background-color: #fff;
   height: 100vh;
   .content {
-    height: calc(100% - 44px); //父级高度设置为100vh才会是视图的高度
+    height: calc(100% - 93px); //父级高度设置为100vh才会是视图的高度
     overflow: hidden;
   }
 }

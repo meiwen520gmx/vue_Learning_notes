@@ -102,6 +102,7 @@ const detail = options => {
     price: Random.natural(60, 999),
     collectionnum: Random.integer(0, 1000),
     detailInfo:{
+      title: Random.cword(5, 10),
       desc: "【"+ Random.cword(5, 10)+"】",
       detailImage: [{key: "穿着效果", list:[
         Random.dataImage("380x250"),
