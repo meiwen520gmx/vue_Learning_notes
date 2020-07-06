@@ -30,7 +30,7 @@ export default {
 
 <style lang="less" scoped>
 .cart-list {
-  height: calc(100% - 93px); //父级高度设置为100vh才会是视图的高度
+  height: calc(100% - 133px); //父级高度设置为100vh才会是视图的高度
   overflow: hidden;
 }
 </style>
