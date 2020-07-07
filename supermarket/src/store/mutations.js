@@ -1,6 +1,7 @@
 import {
   ADD_COUNTER,
-  ADD_TO_CART
+  ADD_TO_CART,
+  CHECK_ALL
 } from "./mutation-types"
 export default {
   //mutations中的每个方法尽可能完成的事件比较单一一点
@@ -11,5 +12,10 @@ export default {
     payload.count = 1;
     payload.checked = false;
     state.cartList.push(payload);
+  },
+  [CHECK_ALL](state, payload){
+    state.cartList.forEach(item => {
+      item.checked = payload
+    })
   }
 }

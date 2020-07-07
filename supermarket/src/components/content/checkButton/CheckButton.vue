@@ -27,5 +27,8 @@
 </script>
 
 <style lang="less" scoped>
-
+.check-button{
+  width: 16px;
+  height: 16px;
+}
 </style>
