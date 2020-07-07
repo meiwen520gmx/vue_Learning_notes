@@ -44,6 +44,7 @@ import { debounce } from "common/utils";
 import { itemListenerMixin, backTopMixin } from "common/mixin";
 import { getDetail } from "network/detail";
 import { getHomeGoods } from "network/home";
+import { mapActions } from "vuex";
 export default {
   name: "detail",
   mixins: [itemListenerMixin, backTopMixin],
@@ -60,7 +61,7 @@ export default {
       page: 0,
       itemImgListener: null,
       themeTopYs: [0, 1000, 2000, 3000],
-      currentIndex: 0,
+      currentIndex: 0
     };
   },
   created() {
@@ -83,16 +84,19 @@ export default {
     /**
      * 事件监听相关的方法
      */
-    addToCart(){
+    ...mapActions(["addCart"]),
+    addToCart() {
       //1.获取购物车需要展示的信息
-      const product = {}
+      const product = {};
       product.image = this.topImages[0];
       product.title = this.detailInfo.title;
       product.desc = this.goods.desc;
       product.price = this.goods.price;
       product.iid = this.id;
       //2.将商品添加到购物车里
-      this.$store.dispatch("addCart", product);
+      this.addCart(product).then(res => {
+        console.log(res);
+      });
     },
     backTop() {
       //调用子组件的方法
