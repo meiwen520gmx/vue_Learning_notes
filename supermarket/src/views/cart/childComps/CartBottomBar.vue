@@ -5,7 +5,7 @@
       <span>全选</span>
     </div>
     <span>合计：￥{{ totalPrice }}</span>
-    <span class="calculation">去计算({{ checkLength }})</span>
+    <span class="calculation" @click="calcClick">去计算({{ checkLength }})</span>
   </div>
 </template>
 
@@ -27,6 +27,11 @@ export default {
       } else {
         //部分或全部不选中
         this.check_all(true); //让他全部选中
+      }
+    },
+    calcClick(){
+      if(!this.checkAll){
+        
       }
     }
   },

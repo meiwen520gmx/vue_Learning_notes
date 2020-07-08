@@ -3,13 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import mock from "./mock/mock";
-// import axios from "axios";
+import toast from "components/common/toast"
 
-// axios.defaults.baseURL = "http://mockjs.com/api";
-
-// Vue.prototype.$http = axios;
 Vue.prototype.$bus = new Vue();
 Vue.config.productionTip = false;
+//安装toast插件
+Vue.use(toast)
 
 new Vue({
   router,
