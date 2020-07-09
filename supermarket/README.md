@@ -279,3 +279,13 @@ for (let i = 0; i < len-1; i++) {
 #### 点击全选按钮
 * 如果原来都是选中，点击一次，全部不选中
 * 如果原来都是不选中（某些不选中），全部选中
+
+### 十二、封装toast插件
+#### 普通封装方式
+* 封装成组件
+* 引入-注册-使用-传值
+#### 插件封装方式
+* 在toast文件夹新建index.js
+* 在入口文件引入index.js并且安装这个插件Vue.use(toastMsg)
+* 在index.js中export default toastMsg
+* 编写toastMsg的install方法

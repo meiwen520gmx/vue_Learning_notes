@@ -31,7 +31,7 @@ export default {
     },
     calcClick(){
       if(!this.checkAll){
-        
+        this.$toast("请选择购买的商品")
       }
     }
   },
