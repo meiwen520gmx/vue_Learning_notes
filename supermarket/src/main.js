@@ -3,12 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import mock from "./mock/mock";
-import toast from "components/common/toast"
+import toastMsg from "components/common/toast"
 
 Vue.prototype.$bus = new Vue();
 Vue.config.productionTip = false;
 //安装toast插件
-Vue.use(toast)
+Vue.use(toastMsg)
 
 new Vue({
   router,

@@ -99,12 +99,9 @@ export default {
       product.iid = this.id;
       //2.将商品添加到购物车里
       this.addCart(product).then(res => {
-        this.$toast.show(res, 1000);
-        // this.show = true;
-        // this.message = res;
-        // setTimeout(() => {
-        //   this.show = false;
-        // },1000)
+        console.log(this.$toast);
+        // this.$toast.show(res);
+        this.$toast(res);
       });
     },
     backTop() {

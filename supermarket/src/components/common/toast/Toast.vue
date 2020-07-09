@@ -13,7 +13,7 @@
       }
     },
     methods: {
-      show(message, duration) {
+      show(message, duration=2000) {
         this.isShow = true;
         this.message = message;
         setTimeout(() => {
@@ -35,5 +35,6 @@
   color: #fff;
   padding: 10px 15px;
   border-radius: 5px;
+  z-index: 99;
 }
 </style>
