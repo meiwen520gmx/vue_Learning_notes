@@ -119,7 +119,6 @@ export default {
       this.themeTopYs.push(Number.MAX_VALUE);
     },
     titleClick(index) {
-      console.log(this.themeTopYs[index]);
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 300);
     },
     swiperImageLoad() {},
