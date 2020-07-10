@@ -13,8 +13,6 @@ Vue.config.productionTip = false;
 Vue.use(toastMsg);
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  // error: 'dist/error.png',
-  loading: "./assets/imgs/common/home/loading.png",
 });
 FastClick.attach(document.body)
 
