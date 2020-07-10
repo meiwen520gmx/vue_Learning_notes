@@ -13,14 +13,14 @@
       }
     },
     methods: {
-      show(message, duration=2000) {
-        this.isShow = true;
-        this.message = message;
-        setTimeout(() => {
-          this.isShow = false;
-          this.message = "";
-        },duration)
-      }
+      // show(message, duration=2000) {
+      //   this.isShow = true;
+      //   this.message = message;
+      //   setTimeout(() => {
+      //     this.isShow = false;
+      //     this.message = "";
+      //   },duration)
+      // }
     },
   }
 </script>
